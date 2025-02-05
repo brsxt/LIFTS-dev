@@ -7,6 +7,7 @@ import ExerciseList from './screens/exerciseList';
 import DayList from './screens/dayList';
 import Item from './components/item';
 import ExerciseSettings from './screens/exerciseSettings';
+import DaySettings from './screens/daySettings';
 
 export default function App() {
     //page and props are arrays to implement back functionality
@@ -40,6 +41,7 @@ export default function App() {
                 {getPage() == 'ExerciseList' && <ExerciseList newPage={newPage} newProps={newProps} getProps={getProps} setTitle={setTitle} setHeaderRight={setHeaderRight} goBack={goBack}/>}
                 {getPage() == 'Exercise' && <Exercise newPage={newPage} newProps={newProps} getProps={getProps} setTitle={setTitle} setHeaderRight={setHeaderRight} goBack={goBack}/>}
                 {getPage() == 'ExerciseSettings' && <ExerciseSettings newPage={newPage} newProps={newProps} getProps={getProps} setTitle={setTitle} setHeaderRight={setHeaderRight} goBack={goBack}/>}
+                {getPage() == 'DaySettings' && <DaySettings newPage={newPage} newProps={newProps} getProps={getProps} setTitle={setTitle} setHeaderRight={setHeaderRight} goBack={goBack}/>}
             </View>
         </SafeAreaView>
     );

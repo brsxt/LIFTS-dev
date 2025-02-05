@@ -1,4 +1,4 @@
-import { FlatList } from 'react-native';
+import { FlatList, Button } from 'react-native';
 import { useEffect, useState } from 'react';
 
 import { loadDayName, loadDayExercises } from '../storage/days';
@@ -16,7 +16,21 @@ const ExerciseList = (props) => {
     }
     const [exerciseList, setExerciseList] = useState([]);
     useEffect(() => {
-        props.setHeaderRight(undefined);
+        if (props.getProps().day) {
+            props.setHeaderRight(
+                <Button
+                    title={'Settings'}
+                    onPress={() => {
+                        props.newProps({
+                            day: props.getProps().day,
+                        });
+                        props.newPage('DaySettings');
+                    }}
+                />
+            )
+        } else {
+            props.setHeaderRight(undefined);
+        }
         localLoadExercises().then((result) => setExerciseList(Object.keys(result)));
         if (props.getProps().day) loadDayName(props.getProps().day);
     }, []);
