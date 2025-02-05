@@ -29,12 +29,14 @@ const loadExerciseDays = async (key) => await load(exerciseDays(key), {});
 const saveExerciseDays = async (key, val) => await save(exerciseDays(key), val);
 
 const exerciseMinRepRec = (key) => `exercise_${key}_minRepRec`;
-const loadExerciseMinRepRec = async (key) => await load(exerciseMinRepRec(key), 1);
+const loadExerciseMinRepRec = async (key) => await load(exerciseMinRepRec(key), 5);
 const saveExerciseMinRepRec = async (key, val) => await save(exerciseMinRepRec(key), val);
 
 const exerciseMaxRepRec = (key) => `exercise_${key}_maxRepRec`;
-const loadExerciseMaxRepRec = async (key) => await load(exerciseMaxRepRec(key), 20);
+const loadExerciseMaxRepRec = async (key) => await load(exerciseMaxRepRec(key), 14);
 const saveExerciseMaxRepRec = async (key, val) => await save(exerciseMaxRepRec(key), val);
+
+const TYPES = ['delta', 'custom', 'body'];
 
 const exerciseType = (key) => `exercise_${key}_type`;
 const loadExerciseType = async (key) => await load(exerciseType(key), 'delta'); // delta custom body
@@ -52,4 +54,4 @@ const loadExerciseWeights = async (key) => {
     return 0
 }
 
-export { loadExercises, saveExercises, saveNewExercise, loadExerciseName, saveExerciseName, loadExerciseHistory, saveExerciseHistory, appendExerciseHistory, loadExerciseDays, saveExerciseDays, loadExerciseMinRepRec, saveExerciseMinRepRec, loadExerciseMaxRepRec, saveExerciseMaxRepRec, loadExerciseType, saveExerciseType, loadExerciseDelta, saveExerciseDelta, loadExerciseCustom, saveExerciseCustom, loadExerciseWeights };
+export { loadExercises, saveExercises, saveNewExercise, loadExerciseName, saveExerciseName, loadExerciseHistory, saveExerciseHistory, appendExerciseHistory, loadExerciseDays, saveExerciseDays, loadExerciseMinRepRec, saveExerciseMinRepRec, loadExerciseMaxRepRec, saveExerciseMaxRepRec, loadExerciseType, saveExerciseType, loadExerciseDelta, saveExerciseDelta, loadExerciseCustom, saveExerciseCustom, loadExerciseWeights, TYPES };

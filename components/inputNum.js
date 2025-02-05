@@ -7,11 +7,11 @@ const InputNum = (props) => {
         <View style={[{backgroundColor: getColour()}, {flexDirection: 'row', justifyContent: 'center'}]}>
             <Text>{props.title}</Text>
             <Button title='-' onPress={() => {
-                props.changeValue(props.value - 1);
+                props.changeValue(Math.max(props.min || 0, props.value - 1));
             }}/>
             <TextInput onChangeText={props.changeValue} value={props.value.toString()}/>
             <Button title='+' onPress={() => {
-                props.changeValue(props.value + 1);
+                props.changeValue(Math.min(props.max || 999999, props.value + 1));
             }}/>
         </View>
     );

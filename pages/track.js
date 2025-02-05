@@ -36,7 +36,7 @@ const Track = (props) => {
             <Button
                 title="Submit"
                 onPress={() =>
-                    appendExerciseHistory(props.exercise, Date.now(), props.weight, props.reps).then(() => loadData())
+                    appendExerciseHistory(props.exercise, Date.now(), props.weight, props.reps).then(loadData)
                 }
             />
             <FlatList

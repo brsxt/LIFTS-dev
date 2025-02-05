@@ -10,7 +10,8 @@ import ListItem from '../components/listItem';
 const DayList = (props) => {
     const [dayList, setDayList] = useState([]);
     useEffect(() => {
-        loadDays().then((result) => setDayList(Object.keys(result)));
+        props.setHeaderRight(undefined);
+        loadDays().then((result) => {setDayList(Object.keys(result))});
     }, []);
     return (
         <FlatList
@@ -24,7 +25,6 @@ const DayList = (props) => {
                             loadExercises: loadExercises,
                             saveNewExercise: saveNewExercise
                         });
-                        console.log(props.getProps());
                         props.newPage('ExerciseList');
                     }}
                 />
@@ -37,7 +37,7 @@ const DayList = (props) => {
                             props.newProps({
                                 day: item,
                                 loadExercises: async () => await loadDayExercises(item),
-                                saveNewExercise: async () => await saveNewExercise().then((exercise) => addDayExercise(item, exercise))
+                                saveNewExercise: async () => await saveNewExercise().then((exercise) => {addDayExercise(item, exercise)})
                             });
                             props.newPage('ExerciseList');
                         }}

@@ -1,4 +1,4 @@
-import { View, Button, BackHandler } from 'react-native';
+import { View, Button } from 'react-native';
 import { useState, useEffect } from 'react';
 
 import { getColour } from '../utils/utils';
@@ -6,26 +6,22 @@ import ListItem from '../components/listItem';
 import Track from '../pages/track';
 import WeightList from '../pages/weightList';
 import RepList from '../pages/repList';
-import { loadExerciseHistory } from '../storage/exercises';
+import { loadExerciseHistory, loadExerciseName } from '../storage/exercises';
 
 const Exercise = (props) => {
     const [tab, setTab] = useState(0);
     const [weight, changeWeight] = useState(0);
     const [reps, changeReps] = useState(0);
     useEffect(() => {
-        const backAction = () => {
-
-        };
-    
-        const backHandler = BackHandler.addEventListener(
-            'hardwareBackPress',
-            backAction,
-        );
-    
-        // return () => backHandler.remove();
         props.setHeaderRight(
             <Button
                 title={'Settings'}
+                onPress={() => {
+                    props.newProps({
+                        exercise: props.getProps().exercise,
+                    });
+                    props.newPage('ExerciseSettings');
+                }}
             />
         )
         loadExerciseHistory(props.getProps().exercise).then((history) => {
@@ -33,6 +29,9 @@ const Exercise = (props) => {
                 return;
             changeWeight(Number(history[history.length-1].weight));
             changeReps(parseInt(history[history.length-1].reps));
+        });
+        loadExerciseName(props.getProps().exercise).then((name) => {
+            props.setTitle(name);
         });
     }, [])
     const tabs = [

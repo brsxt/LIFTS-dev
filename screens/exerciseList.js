@@ -16,6 +16,7 @@ const ExerciseList = (props) => {
     }
     const [exerciseList, setExerciseList] = useState([]);
     useEffect(() => {
+        props.setHeaderRight(undefined);
         localLoadExercises().then((result) => setExerciseList(Object.keys(result)));
         if (props.getProps().day) loadDayName(props.getProps().day);
     }, []);
