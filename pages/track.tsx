@@ -5,14 +5,15 @@ import { loadExerciseHistory, appendExerciseHistory } from '../storage/exercises
 import { getColour } from '../utils/utils';
 import InputNum from '../components/inputNum';
 import Row from '../components/row';
+import { pageProps } from '../utils/types';
 
-const Track = (props) => {
-    const [data, setData] = useState([]);
+const Track: React.FC<pageProps> = (props: pageProps) => {
+    const [data, setData] = useState<(number|string)[][]>([]);
     const loadData = () => {
         loadExerciseHistory(props.exercise).then((history) => {
             let data = [];
             for (let i in history) {
-                item = history[i];
+                let item = history[i];
                 data.unshift([item.time, item.reps, item.weight]);
             }
             setData(data);
@@ -24,19 +25,19 @@ const Track = (props) => {
     return (
         <View style={[{backgroundColor: getColour(), flex: 1}]}>
             <InputNum
-                value={props.weight}
-                changeValue={props.changeWeight}
+                value={props.weight!}
+                changeValue={props.changeWeight!}
                 title={'weight'}
             />
             <InputNum
-                value={props.reps}
-                changeValue={props.changeReps}
+                value={props.reps!}
+                changeValue={props.changeReps!}
                 title={'reps'}
             />
             <Button
                 title="Submit"
                 onPress={() =>
-                    appendExerciseHistory(props.exercise, Date.now(), props.weight, props.reps).then(loadData)
+                    appendExerciseHistory(props.exercise, Date.now(), props.weight!, props.reps!).then(loadData)
                 }
             />
             <FlatList

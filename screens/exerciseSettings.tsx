@@ -7,8 +7,9 @@ import { MAX_REPS } from '../utils/utils';
 import ListItem from '../components/listItem';
 import Selector from '../components/selector';
 import InputNum from '../components/inputNum';
+import { screenProps } from '../utils/types';
 
-const ExerciseSettings = (props) => {
+const ExerciseSettings: React.FC<screenProps> = (props: screenProps) => {
     const [name, setName] = useState('');
     const [minRepRec, setMinRepRec] = useState(0);
     const [maxRepRec, setMaxRepRec] = useState(MAX_REPS);
@@ -16,13 +17,13 @@ const ExerciseSettings = (props) => {
     const [delta, setDelta] = useState(0);
     useEffect(() => {
         props.setHeaderRight(undefined);
-        loadExerciseName(props.getProps().exercise).then(result => {setName(result)});
-        loadExerciseMinRepRec(props.getProps().exercise).then(result => {setMinRepRec(result);});
-        loadExerciseMaxRepRec(props.getProps().exercise).then(result => {setMaxRepRec(result);});
-        loadExerciseType(props.getProps().exercise).then(result => {
+        loadExerciseName(props.getProps().exercise!).then(result => {setName(result)});
+        loadExerciseMinRepRec(props.getProps().exercise!).then(result => {setMinRepRec(result);});
+        loadExerciseMaxRepRec(props.getProps().exercise!).then(result => {setMaxRepRec(result);});
+        loadExerciseType(props.getProps().exercise!).then(result => {
             setType(TYPES.indexOf(result));
         });
-        loadExerciseDelta(props.getProps().exercise).then(result => {setDelta(result);});
+        loadExerciseDelta(props.getProps().exercise!).then(result => {setDelta(result);});
     }, []);
     return (
         <View>
@@ -57,12 +58,12 @@ const ExerciseSettings = (props) => {
             <Button
                 title="Save"
                 onPress={async () => {
-                    await saveExerciseName(props.getProps().exercise, name)
-                    await saveExerciseMinRepRec(props.getProps().exercise, minRepRec);
-                    await saveExerciseMaxRepRec(props.getProps().exercise, maxRepRec);
-                    await saveExerciseType(props.getProps().exercise, TYPES[type]);
+                    await saveExerciseName(props.getProps().exercise!, name)
+                    await saveExerciseMinRepRec(props.getProps().exercise!, minRepRec);
+                    await saveExerciseMaxRepRec(props.getProps().exercise!, maxRepRec);
+                    await saveExerciseType(props.getProps().exercise!, TYPES[type]);
                     if (TYPES[type] == 'delta' || TYPES[type] == 'body')
-                        await saveExerciseDelta(props.getProps().exercise, delta);
+                        await saveExerciseDelta(props.getProps().exercise!, delta);
                     props.goBack();
                 }}
             />

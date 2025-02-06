@@ -3,8 +3,9 @@ import { useEffect, useState } from 'react';
 
 import { getColour } from '../utils/utils';
 import styles from '../utils/styles';
+import { itemProps } from '../utils/types';
 
-const Item = (props) => {
+const Item: React.FC<itemProps> = (props: itemProps) => {
     const [text, setText] = useState(props.text);
     useEffect(() => {
         if (props.getText)

@@ -5,13 +5,14 @@ import { loadExerciseHistory } from '../storage/exercises';
 import { calcWeight, roundWeightDown, MAX_REPS, lowerWeight, calcReps } from '../utils/utils';
 import styles from '../utils/styles';
 import Row from '../components/row';
+import { pageProps } from '../utils/types';
 
 let each_limit = 9;
 let total_limit = 15;
 let lower_rep_rec = 1;
 let upper_rep_rec = 15;
 
-function add(temp, list, w, r) {
+function add(temp: number[][], list: number[][][], w: number, r: number): void {
     console.log(w, r);
     let rec = Math.floor(r);
     let w_done;
@@ -30,7 +31,7 @@ function add(temp, list, w, r) {
     }
 }
 
-function comp(cx, cy) {
+function comp(cx: number, cy: number): number {
     if (cx < cy)
         return -1;
     if (cx > cy)
@@ -38,14 +39,14 @@ function comp(cx, cy) {
     return 0;
 }
 
-const WeightList = (props) => {
-    const [data, setData] = useState([]);
+const WeightList: React.FC<pageProps> = (props: pageProps) => {
+    const [data, setData] = useState<number[][]>([]);
     useEffect(() => {
         loadExerciseHistory(props.exercise).then((history) => {
-            let maxes = {};
+            let maxes: Record<number, number> = {};
             for (let {reps, weight} of history)
                 maxes[reps] = Math.max(maxes[reps] || 0, weight);
-            let oneRM = Math.max(...Object.entries(maxes).map(([r, w]) => calcWeight(w, r, 1)));
+            let oneRM = Math.max(...Object.entries(maxes).map(([r, w]) => calcWeight(w, Number(r), 1)));
             let temp = []
             let weight = 0;
             for (let reps = MAX_REPS; reps > 0; reps--) {
@@ -55,16 +56,18 @@ const WeightList = (props) => {
 
             let w = roundWeightDown(props.exercise, oneRM);
             let data = [[], []];
+            let r: number;
             while (Math.floor(r = calcReps(oneRM, w, MAX_REPS)) <= MAX_REPS && w >= 2.5) {
                 add(temp, data, w, r);
                 w = lowerWeight(props.exercise, w);
             }
             add(temp, data, w, r);
             console.log(data);
-            data[0].sort((x, y) => {
+            data[0].sort((x: number[], y: number[]): number => {
                 // EASIEST
-                cx = x[0] - calcWeight(oneRM, 1, x[2]);
-                cy = y[0] - calcWeight(oneRM, 1, y[2]);
+                let cx: number = x[0] - calcWeight(oneRM, 1, x[2]);
+                let cy: number = y[0] - calcWeight(oneRM, 1, y[2]);
+                let res: number;
                 if ((res = comp(cx, cy)) != 0)
                     return res
                 // FURTHEST PR
@@ -72,10 +75,10 @@ const WeightList = (props) => {
                 cy = temp[y[2]-1][1] - y[0];
                 return comp(cx, cy);
             });
-            data[1].sort((x, y) => {
+            data[1].sort((x: number[], y: number[]): number => {
                 // EASIEST WEIGHT
-                cx = x[0] - calcWeight(oneRM, 1, x[2]);
-                cy = y[0] - calcWeight(oneRM, 1, y[2]);
+                let cx = x[0] - calcWeight(oneRM, 1, x[2]);
+                let cy = y[0] - calcWeight(oneRM, 1, y[2]);
                 return comp(cx, cy);
             });
             data = data[0].slice(0, each_limit).concat(data[1].slice(0, each_limit)).slice(0, total_limit);
@@ -83,21 +86,21 @@ const WeightList = (props) => {
         });
     }, []);
     return (
-        <FlatList style={[styles.list]}
+        <FlatList
             data={data}
             ListHeaderComponent={
                 <Row data={['weight', 'reps', 'recommended']}/>
             }
-            renderItem={({index, item}) => {
-                item = [...item];
-                if (item[1] < 1) item[1] = '< 1';
-                else if (item[1] <= MAX_REPS) item[1] = item[1].toFixed(1);
-                else item[1] = `> ${MAX_REPS}`;
+            renderItem={({index, item}: {index: number, item: number[]}) => {
+                let arr: (number|string)[] = [...item];
+                if (item[1] < 1) arr[1] = '< 1';
+                else if (item[1] <= MAX_REPS) arr[1] = item[1].toFixed(1);
+                else arr[1] = `> ${MAX_REPS}`;
                 return (
                     <Pressable
                         key={index}
                     >
-                        <Row data={item}/>
+                        <Row data={arr}/>
                     </Pressable>
                 )
             }}

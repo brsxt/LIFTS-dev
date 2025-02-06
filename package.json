@@ -2,7 +2,7 @@
   "name": "lifts-dev",
   "license": "0BSD",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.tsx",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -27,7 +27,9 @@
     "expo-checkbox": "~4.0.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.26.0"
+    "@babel/core": "^7.26.0",
+    "typescript": "^5.3.3",
+    "@types/react": "~18.3.12"
   },
   "private": true
 }

@@ -1,5 +1,5 @@
 import { SafeAreaView, View, Button, StatusBar } from 'react-native';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 import { getColour } from './utils/utils';
 import Exercise from './screens/exercise';
@@ -8,20 +8,19 @@ import DayList from './screens/dayList';
 import Item from './components/item';
 import ExerciseSettings from './screens/exerciseSettings';
 import DaySettings from './screens/daySettings';
+import { navigatorProps } from './utils/types';
 
 export default function App() {
     //page and props are arrays to implement back functionality
     const [page, setPage] = useState(['DayList']);
     const [props, setProps] = useState([{}]);
     const [title, setTitle] = useState('LIFTS');
-    const [headerRight, setHeaderRight] = useState(undefined);
-    const getPage = () => page[page.length-1];
-    const newPage = (s) => setPage([...page, s]);
-    const getProps = () => props[props.length-1];
-    const newProps = (p) => setProps([...props, p]);
-    useEffect(() => {
-    }, []);
-    const goBack = () => {
+    const [headerRight, setHeaderRight] = useState<React.JSX.Element|undefined>(undefined);
+    const getPage = (): string => page[page.length-1];
+    const newPage = (s: string): void => setPage([...page, s]);
+    const getProps = (): navigatorProps => props[props.length-1];
+    const newProps = (p: navigatorProps): void => setProps([...props, p]);
+    const goBack = (): void => {
         setPage((a) => a.slice(0, -1));
         setProps((a) => a.slice(0, -1));
     }

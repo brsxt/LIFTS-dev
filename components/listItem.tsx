@@ -2,8 +2,9 @@ import { Pressable } from 'react-native';
 
 import { getColour } from '../utils/utils';
 import Item from './item';
+import { listItemProps } from '../utils/types';
 
-const ListItem = (props) => {
+const ListItem: React.FC<listItemProps> = (props: listItemProps) => {
     return (
         <Pressable
             style={[{backgroundColor: getColour(), flex: 1},]}

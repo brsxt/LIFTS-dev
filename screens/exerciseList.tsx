@@ -1,20 +1,14 @@
 import { FlatList, Button } from 'react-native';
 import { useEffect, useState } from 'react';
 
-import { loadDayName, loadDayExercises } from '../storage/days';
-import { loadExercises, saveNewExercise, loadExerciseName } from '../storage/exercises';
-import { addDayExercise } from '../storage/both';
+import { loadDayName } from '../storage/days';
+import { loadExerciseName } from '../storage/exercises';
 import { getColour } from '../utils/utils';
 import ListItem from '../components/listItem';
+import { screenProps } from '../utils/types';
 
-const ExerciseList = (props) => {
-    let localLoadExercises = loadExercises;
-    let localSaveNewExercise = saveNewExercise;
-    if (props.getProps().day) {
-        localLoadExercises = async () => await loadDayExercises(props.getProps().day),
-        localSaveNewExercise = async () => await saveNewExercise().then((exercise) => addDayExercise(props.getProps().day, exercise))
-    }
-    const [exerciseList, setExerciseList] = useState([]);
+const ExerciseList: React.FC<screenProps> = (props: screenProps) => {
+    const [exerciseList, setExerciseList] = useState<number[]>([]);
     useEffect(() => {
         if (props.getProps().day) {
             props.setHeaderRight(
@@ -22,7 +16,7 @@ const ExerciseList = (props) => {
                     title={'Settings'}
                     onPress={() => {
                         props.newProps({
-                            day: props.getProps().day,
+                            day: props.getProps().day!,
                         });
                         props.newPage('DaySettings');
                     }}
@@ -31,8 +25,8 @@ const ExerciseList = (props) => {
         } else {
             props.setHeaderRight(undefined);
         }
-        localLoadExercises().then((result) => setExerciseList(Object.keys(result)));
-        if (props.getProps().day) loadDayName(props.getProps().day);
+        props.getProps().loadExercises!().then((result) => setExerciseList(result));
+        if (props.getProps().day) loadDayName(props.getProps().day!);
     }, []);
     return (
         <FlatList
@@ -52,9 +46,13 @@ const ExerciseList = (props) => {
                 )
             }}
             ListFooterComponent={
-                <ListItem text={"Add new exercise"} onPress={() => {
-                    localSaveNewExercise().then(() => localLoadExercises().then((result) => setExerciseList(Object.keys(result))));
-                }}/>
+                <ListItem text={"Add new exercise"} onPress={
+                    async (): Promise<void> => {
+                        props.getProps().saveNewExercise!().then(async (): Promise<void> => {
+                            props.getProps().loadExercises!().then((result) => setExerciseList(result))
+                        });
+                    }
+                }/>
             }
         />
     );

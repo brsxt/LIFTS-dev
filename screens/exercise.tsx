@@ -7,11 +7,12 @@ import Track from '../pages/track';
 import WeightList from '../pages/weightList';
 import RepList from '../pages/repList';
 import { loadExerciseHistory, loadExerciseName } from '../storage/exercises';
+import { screenProps } from '../utils/types';
 
-const Exercise = (props) => {
-    const [tab, setTab] = useState(0);
-    const [weight, changeWeight] = useState(0);
-    const [reps, changeReps] = useState(0);
+const Exercise: React.FC<screenProps> = (props: screenProps) => {
+    const [tab, setTab] = useState<number>(0);
+    const [weight, changeWeight] = useState<number>(0);
+    const [reps, changeReps] = useState<number>(0);
     useEffect(() => {
         props.setHeaderRight(
             <Button
@@ -24,20 +25,20 @@ const Exercise = (props) => {
                 }}
             />
         )
-        loadExerciseHistory(props.getProps().exercise).then((history) => {
+        loadExerciseHistory(props.getProps().exercise!).then((history) => {
             if (history.length == 0)
                 return;
-            changeWeight(Number(history[history.length-1].weight));
-            changeReps(parseInt(history[history.length-1].reps));
+            changeWeight(history[history.length-1].weight);
+            changeReps(history[history.length-1].reps);
         });
-        loadExerciseName(props.getProps().exercise).then((name) => {
+        loadExerciseName(props.getProps().exercise!).then((name) => {
             props.setTitle(name);
         });
     }, [])
     const tabs = [
-        <Track key='Track' exercise={props.getProps().exercise} weight={weight} changeWeight={changeWeight} reps={reps} changeReps={changeReps}/>,
-        <RepList key='RepList' exercise={props.getProps().exercise}/>,
-        <WeightList key='WeightList' exercise={props.getProps().exercise}/>
+        <Track key='T' exercise={props.getProps().exercise!} weight={weight} changeWeight={changeWeight} reps={reps} changeReps={changeReps}/>,
+        <RepList key='R' exercise={props.getProps().exercise!}/>,
+        <WeightList key='W' exercise={props.getProps().exercise!}/>
     ];
     const names = ['Track', 'Best', 'Next'];
     return (

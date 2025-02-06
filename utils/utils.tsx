@@ -2,11 +2,12 @@ let MAX_REPS = 20;
 
 let TABLE = [100, 97, 94.5, 91.5, 88.5, 86, 83, 80.5, 77.5, 74.5, 73, 71, 69.5, 68, 66.5, 65, 64, 62.5, 61, 60]
 
-function calcWeight(w, x, y) {
-    return parseFloat(w * TABLE[y-1] / TABLE[x-1]);
+function calcWeight(w: number, x: number, y: number): number {
+    if (x < 1 || y < 1) return 0;
+    return w * TABLE[y-1] / TABLE[x-1];
 }
 
-function calcReps(m, w, n) {
+function calcReps(m: number, w: number, n: number): number {
     let p = 100 * w / m;
     let res = n+1;
     if (p > 100) {
@@ -20,18 +21,18 @@ function calcReps(m, w, n) {
             }
         }
     }
-    return parseFloat(res);
+    return res;
 }
 
-const roundWeightDown = (exercise, weight) => {
+const roundWeightDown = (exercise: number, weight: number): number => {
     return Math.floor(weight/2.5)*2.5;
 }
 
-const lowerWeight = (exercise, weight) => {
+const lowerWeight = (exercise: number, weight: number) => {
     return weight - 2.5;
 }
 
-function getColour() {
+function getColour(): string {
     var letters = '0123456789ABCDEF';
     var color = '#';
     for (var i = 0; i < 6; i++) {
