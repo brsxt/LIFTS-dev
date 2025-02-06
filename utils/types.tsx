@@ -12,7 +12,7 @@ type screenProps = {
     getProps: () => navigatorProps;
     setTitle: (s: string) => void;
     setHeaderRight: (x: React.JSX.Element|undefined) => void;
-    goBack: () => void;
+    goBack: (x?: number) => void;
 };
 
 type navigatorProps = {
@@ -20,6 +20,8 @@ type navigatorProps = {
     exercise?: number;
     loadExercises?: () => Promise<number[]>;
     saveNewExercise?: () => Promise<number>;
+    delete?: () => Promise<void>;
+    getName?: () => Promise<string>;
 }
 
 type pageProps = {

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { View, TextInput, Button } from 'react-native';
 
 import { loadExerciseType, loadExerciseName, loadExerciseMinRepRec, loadExerciseMaxRepRec, saveExerciseName, loadExerciseDelta, saveExerciseMinRepRec, saveExerciseMaxRepRec, saveExerciseType, saveExerciseDelta, TYPES } from '../storage/exercises';
-import { addDayExercise } from '../storage/both';
+import { addDayExercise, deleteExercise } from '../storage/both';
 import { MAX_REPS } from '../utils/utils';
 import ListItem from '../components/listItem';
 import Selector from '../components/selector';
@@ -16,7 +16,18 @@ const ExerciseSettings: React.FC<screenProps> = (props: screenProps) => {
     const [type, setType] = useState(0);
     const [delta, setDelta] = useState(0);
     useEffect(() => {
-        props.setHeaderRight(undefined);
+        props.setHeaderRight(
+            <Button
+                title={'Delete'}
+                onPress={() => {
+                    props.newProps({
+                        delete: async () => { await deleteExercise(props.getProps().exercise!) },
+                        getName: async () => await loadExerciseName(props.getProps().exercise!),
+                    });
+                    props.newPage('Delete');
+                }}
+            />
+        )
         loadExerciseName(props.getProps().exercise!).then(result => {setName(result)});
         loadExerciseMinRepRec(props.getProps().exercise!).then(result => {setMinRepRec(result);});
         loadExerciseMaxRepRec(props.getProps().exercise!).then(result => {setMaxRepRec(result);});
