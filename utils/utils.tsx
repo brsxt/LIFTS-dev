@@ -1,3 +1,5 @@
+import { loadExerciseDelta } from "../storage/exercises";
+
 let MAX_REPS = 20;
 
 let TABLE = [100, 97, 94.5, 91.5, 88.5, 86, 83, 80.5, 77.5, 74.5, 73, 71, 69.5, 68, 66.5, 65, 64, 62.5, 61, 60]
@@ -24,12 +26,14 @@ function calcReps(m: number, w: number, n: number): number {
     return res;
 }
 
-const roundWeightDown = (exercise: number, weight: number): number => {
-    return Math.floor(weight/2.5)*2.5;
+const roundWeightDown = async (exercise: number, weight: number): Promise<number> => {
+    let delta = await loadExerciseDelta(exercise)
+    return Math.floor(weight/delta)*delta;
 }
 
-const lowerWeight = (exercise: number, weight: number) => {
-    return weight - 2.5;
+const lowerWeight = async (exercise: number, weight: number): Promise<number> => {
+    let delta = await loadExerciseDelta(exercise)
+    return weight - delta;
 }
 
 function getColour(): string {

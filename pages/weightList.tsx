@@ -1,7 +1,7 @@
 import { FlatList, Pressable } from 'react-native';
 import { useEffect, useState } from 'react';
 
-import { loadExerciseHistory } from '../storage/exercises';
+import { loadExerciseHistory, loadExerciseDelta } from '../storage/exercises';
 import { calcWeight, roundWeightDown, MAX_REPS, lowerWeight, calcReps } from '../utils/utils';
 import styles from '../utils/styles';
 import Row from '../components/row';
@@ -13,7 +13,6 @@ let lower_rep_rec = 1;
 let upper_rep_rec = 15;
 
 function add(temp: number[][], list: number[][][], w: number, r: number): void {
-    console.log(w, r);
     let rec = Math.floor(r);
     let w_done;
     for (let i = 0; i < 2; i++) {
@@ -22,7 +21,6 @@ function add(temp: number[][], list: number[][][], w: number, r: number): void {
             w_done = temp[rec-1][1];
             // filter for PRs
             if (w > w_done && lower_rep_rec <= rec && rec <= upper_rep_rec) {
-                console.log(w, r, rec);
                 list[i].push([w, r, rec]);
                 break;
             }
@@ -41,8 +39,12 @@ function comp(cx: number, cy: number): number {
 
 const WeightList: React.FC<pageProps> = (props: pageProps) => {
     const [data, setData] = useState<number[][]>([]);
+    const [delta, setDelta] = useState<number>(1);
     useEffect(() => {
-        loadExerciseHistory(props.exercise).then((history) => {
+        loadExerciseDelta(props.exercise).then((delta: number) => {
+            setDelta(delta);
+        });
+        loadExerciseHistory(props.exercise).then(async (history): Promise<void> => {
             let maxes: Record<number, number> = {};
             for (let {reps, weight} of history)
                 maxes[reps] = Math.max(maxes[reps] || 0, weight);
@@ -53,16 +55,14 @@ const WeightList: React.FC<pageProps> = (props: pageProps) => {
                 weight = Math.max(weight, maxes[reps] || 0);
                 temp.unshift([reps, weight]);
             }
-
-            let w = roundWeightDown(props.exercise, oneRM);
+            let w = await roundWeightDown(props.exercise, oneRM);
             let data = [[], []];
             let r: number;
-            while (Math.floor(r = calcReps(oneRM, w, MAX_REPS)) <= MAX_REPS && w >= 2.5) {
+            while (Math.floor(r = calcReps(oneRM, w, MAX_REPS)) <= MAX_REPS && w >= delta) {
                 add(temp, data, w, r);
-                w = lowerWeight(props.exercise, w);
+                w = await lowerWeight(props.exercise, w);
             }
             add(temp, data, w, r);
-            console.log(data);
             data[0].sort((x: number[], y: number[]): number => {
                 // EASIEST
                 let cx: number = x[0] - calcWeight(oneRM, 1, x[2]);
