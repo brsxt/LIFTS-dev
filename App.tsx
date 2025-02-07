@@ -10,6 +10,7 @@ import ExerciseSettings from './screens/exerciseSettings';
 import DaySettings from './screens/daySettings';
 import { navigatorProps } from './utils/types';
 import Delete from './screens/delete';
+import Profile from './screens/profile';
 
 export default function App() {
     //page and props are arrays to implement back functionality
@@ -45,6 +46,7 @@ export default function App() {
                 {getPage() == 'ExerciseSettings' && <ExerciseSettings newPage={newPage} newProps={newProps} getProps={getProps} setTitle={setTitle} setHeaderRight={setHeaderRight} goBack={goBack}/>}
                 {getPage() == 'DaySettings' && <DaySettings newPage={newPage} newProps={newProps} getProps={getProps} setTitle={setTitle} setHeaderRight={setHeaderRight} goBack={goBack}/>}
                 {getPage() == 'Delete' && <Delete newPage={newPage} newProps={newProps} getProps={getProps} setTitle={setTitle} setHeaderRight={setHeaderRight} goBack={goBack}/>}
+                {getPage() == 'Profile' && <Profile newPage={newPage} newProps={newProps} getProps={getProps} setTitle={setTitle} setHeaderRight={setHeaderRight} goBack={goBack}/>}
             </View>
         </SafeAreaView>
     );

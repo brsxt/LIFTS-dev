@@ -1,4 +1,4 @@
-import { FlatList } from 'react-native';
+import { FlatList, Button } from 'react-native';
 import { useEffect, useState } from 'react';
 
 import { loadDayList, saveNewDay, loadDayName, loadDayExerciseList } from '../storage/days';
@@ -11,7 +11,15 @@ import { screenProps } from '../utils/types';
 const DayList: React.FC<screenProps> = (props: screenProps) => {
     const [dayList, setDayList] = useState<number[]>([]);
     useEffect((): void => {
-        props.setHeaderRight(undefined);
+        props.setHeaderRight(
+            <Button
+                title={'Profile'}
+                onPress={() => {
+                    props.newProps({});
+                    props.newPage('Profile');
+                }}
+            />
+        )
         loadDayList().then((result: number[]): void => { setDayList(result) });
     }, []);
     return (
