@@ -2,17 +2,17 @@ import { FlatList, Pressable } from 'react-native';
 import { useEffect, useState } from 'react';
 
 import { loadExerciseHistory, loadExerciseDelta } from '../storage/exercises';
-import { calcWeight, roundWeightDown, MAX_REPS, lowerWeight, calcReps } from '../utils/utils';
+import { calcWeight, roundWeightDown, MAX_REPS, lowerWeight, calcReps, displayWeight } from '../utils/utils';
 import styles from '../utils/styles';
 import Row from '../components/row';
-import { pageProps } from '../utils/types';
+import { pageProps, weightListRow } from '../utils/types';
 
 let each_limit = 9;
 let total_limit = 15;
 let lower_rep_rec = 1;
 let upper_rep_rec = 15;
 
-function add(temp: number[][], list: number[][][], w: number, r: number): void {
+async function add(temp: number[][], list: weightListRow[][], w: number, r: number): Promise<void> {
     let rec = Math.floor(r);
     let w_done;
     for (let i = 0; i < 2; i++) {
@@ -21,7 +21,7 @@ function add(temp: number[][], list: number[][][], w: number, r: number): void {
             w_done = temp[rec-1][1];
             // filter for PRs
             if (w > w_done && lower_rep_rec <= rec && rec <= upper_rep_rec) {
-                list[i].push([w, r, rec]);
+                list[i].push({weight: w, reps: r, rec: rec});
                 break;
             }
         }
@@ -38,7 +38,7 @@ function comp(cx: number, cy: number): number {
 }
 
 const WeightList: React.FC<pageProps> = (props: pageProps) => {
-    const [data, setData] = useState<number[][]>([]);
+    const [data, setData] = useState<weightListRow[]>([]);
     const [delta, setDelta] = useState<number>(1);
     useEffect(() => {
         loadExerciseDelta(props.exercise).then((delta: number) => {
@@ -56,33 +56,36 @@ const WeightList: React.FC<pageProps> = (props: pageProps) => {
                 temp.unshift([reps, weight]);
             }
             let w = await roundWeightDown(props.exercise, oneRM);
-            let data = [[], []];
+            let data: weightListRow[][] = [[], []];
             let r: number;
             while (Math.floor(r = calcReps(oneRM, w, MAX_REPS)) <= MAX_REPS && w >= delta) {
-                add(temp, data, w, r);
+                await add(temp, data, w, r);
                 w = await lowerWeight(props.exercise, w);
             }
-            add(temp, data, w, r);
-            data[0].sort((x: number[], y: number[]): number => {
+            await add(temp, data, w, r);
+            data[0].sort((x: weightListRow, y: weightListRow): number => {
                 // EASIEST
-                let cx: number = x[0] - calcWeight(oneRM, 1, x[2]);
-                let cy: number = y[0] - calcWeight(oneRM, 1, y[2]);
+                let cx: number = Number(x.weight) - calcWeight(oneRM, 1, x.rec);
+                let cy: number = Number(y.weight) - calcWeight(oneRM, 1, y.rec);
                 let res: number;
                 if ((res = comp(cx, cy)) != 0)
                     return res
                 // FURTHEST PR
-                cx = temp[x[2]-1][1] - x[0];
-                cy = temp[y[2]-1][1] - y[0];
+                cx = temp[x.rec-1][1] - Number(x.weight);
+                cy = temp[y.rec-1][1] - Number(y.weight);
                 return comp(cx, cy);
             });
-            data[1].sort((x: number[], y: number[]): number => {
+            data[1].sort((x: weightListRow, y: weightListRow): number => {
                 // EASIEST WEIGHT
-                let cx = x[0] - calcWeight(oneRM, 1, x[2]);
-                let cy = y[0] - calcWeight(oneRM, 1, y[2]);
+                let cx = Number(x.weight) - calcWeight(oneRM, 1, x.rec);
+                let cy = Number(y.weight) - calcWeight(oneRM, 1, y.rec);
                 return comp(cx, cy);
             });
-            data = data[0].slice(0, each_limit).concat(data[1].slice(0, each_limit)).slice(0, total_limit);
-            setData(data);
+            let stringData: weightListRow[] = data[0].slice(0, each_limit).concat(data[1].slice(0, each_limit)).slice(0, total_limit);
+            for (let i = 0; i < stringData.length; i++) {
+                stringData[i].weight = await displayWeight(props.exercise, Number(stringData[i].weight));
+            }
+            setData(stringData);
         });
     }, []);
     return (
@@ -91,16 +94,16 @@ const WeightList: React.FC<pageProps> = (props: pageProps) => {
             ListHeaderComponent={
                 <Row data={['weight', 'reps', 'recommended']}/>
             }
-            renderItem={({index, item}: {index: number, item: number[]}) => {
-                let arr: (number|string)[] = [...item];
-                if (item[1] < 1) arr[1] = '< 1';
-                else if (item[1] <= MAX_REPS) arr[1] = item[1].toFixed(1);
-                else arr[1] = `> ${MAX_REPS}`;
+            renderItem={({index, item}: {index: number, item: weightListRow}) => {
+                let rowData: (string|number)[] = [item.weight, item.reps, item.rec];
+                if (item.reps < 1) rowData[1] = '< 1';
+                else if (item.reps <= MAX_REPS) rowData[1] = item.reps.toFixed(1);
+                else rowData[1] = `> ${MAX_REPS}`;
                 return (
                     <Pressable
                         key={index}
                     >
-                        <Row data={arr}/>
+                        <Row data={rowData}/>
                     </Pressable>
                 )
             }}

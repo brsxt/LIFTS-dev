@@ -1,42 +1,50 @@
 import { View, Button } from 'react-native';
 import { useState, useEffect } from 'react';
 
-import { getColour } from '../utils/utils';
+import { getColour, round } from '../utils/utils';
 import ListItem from '../components/listItem';
 import Track from '../pages/track';
 import WeightList from '../pages/weightList';
 import RepList from '../pages/repList';
-import { loadExerciseHistory, loadExerciseName } from '../storage/exercises';
-import { screenProps } from '../utils/types';
+import { loadExerciseHistory, loadExerciseName, loadExerciseType } from '../storage/exercises';
+import { loadBodyWeight } from '../storage/body';
+import { screenProps, set } from '../utils/types';
 
 const Exercise: React.FC<screenProps> = (props: screenProps) => {
     const [tab, setTab] = useState<number>(0);
-    const [weight, changeWeight] = useState<number>(0);
-    const [reps, changeReps] = useState<number>(0);
+    const [weight, setWeight] = useState<number>(0);
+    const [reps, setReps] = useState<number>(0);
+    const [extra, setExtra] = useState<number>(0);
     useEffect(() => {
-        props.setHeaderRight(
-            <Button
-                title={'Settings'}
-                onPress={() => {
-                    props.newProps({
-                        exercise: props.getProps().exercise,
-                    });
-                    props.newPage('ExerciseSettings');
-                }}
-            />
-        )
-        loadExerciseHistory(props.getProps().exercise!).then((history) => {
-            if (history.length == 0)
-                return;
-            changeWeight(history[history.length-1].weight);
-            changeReps(history[history.length-1].reps);
-        });
-        loadExerciseName(props.getProps().exercise!).then((name) => {
+        (async (): Promise<void> => {
+            props.setHeaderRight(
+                <Button
+                    title={'Settings'}
+                    onPress={() => {
+                        props.newProps({
+                            exercise: props.getProps().exercise,
+                        });
+                        props.newPage('ExerciseSettings');
+                    }}
+                />
+            )
+            let type: string = await loadExerciseType(props.getProps().exercise!);
+            let extra: number = 0;
+            if (type == 'body') {
+                extra = await loadBodyWeight();
+                setExtra(extra);
+            }
+            let history: set[] = await loadExerciseHistory(props.getProps().exercise!);
+            if (history.length > 0) {
+                setWeight(round(history[history.length-1].weight - extra));
+                setReps(history[history.length-1].reps);
+            }
+            let name: string = await loadExerciseName(props.getProps().exercise!);
             props.setTitle(name);
-        });
+        })();
     }, [])
     const tabs = [
-        <Track key='T' exercise={props.getProps().exercise!} weight={weight} changeWeight={changeWeight} reps={reps} changeReps={changeReps}/>,
+        <Track key='T' exercise={props.getProps().exercise!} weight={weight} changeWeight={setWeight} reps={reps} changeReps={setReps} extra={extra}/>,
         <RepList key='R' exercise={props.getProps().exercise!}/>,
         <WeightList key='W' exercise={props.getProps().exercise!}/>
     ];

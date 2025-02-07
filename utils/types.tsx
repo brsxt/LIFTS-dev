@@ -30,6 +30,7 @@ type pageProps = {
     changeWeight?: (x: number) => void;
     reps?: number;
     changeReps?: (x: number) => void;
+    extra?: number;
 }
 
 type inputNumProps = {
@@ -38,6 +39,7 @@ type inputNumProps = {
     title: string;
     min?: number;
     max?: number;
+    delta: number;
 }
 
 type itemProps = {
@@ -61,4 +63,10 @@ type selectorProps = {
     data: string[];
 }
 
-export { hashSet, set, screenProps, navigatorProps, pageProps, inputNumProps, itemProps, listItemProps, rowProps, selectorProps };
+type weightListRow = {
+    weight: number|string,
+    reps: number,
+    rec: number;
+}
+
+export { hashSet, set, screenProps, navigatorProps, pageProps, inputNumProps, itemProps, listItemProps, rowProps, selectorProps, weightListRow };

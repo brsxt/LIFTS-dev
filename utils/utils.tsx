@@ -1,4 +1,5 @@
-import { loadExerciseDelta } from "../storage/exercises";
+import { loadBodyWeight } from "../storage/body";
+import { loadExerciseDelta, loadExerciseType } from "../storage/exercises";
 
 let MAX_REPS = 20;
 
@@ -26,15 +27,42 @@ function calcReps(m: number, w: number, n: number): number {
     return res;
 }
 
+const roundDownDelta = (weight: number, delta: number): number => Math.floor(weight/delta)*delta;
+
 const roundWeightDown = async (exercise: number, weight: number): Promise<number> => {
-    let delta = await loadExerciseDelta(exercise)
-    return Math.floor(weight/delta)*delta;
+    let delta = await loadExerciseDelta(exercise);
+    if (await loadExerciseType(exercise) == 'body') {
+        let bodyWeight = await loadBodyWeight();
+        let diff = weight - bodyWeight;
+        return bodyWeight + roundDownDelta(diff, delta);
+    }
+    return roundDownDelta(weight, delta);
 }
 
 const lowerWeight = async (exercise: number, weight: number): Promise<number> => {
     let delta = await loadExerciseDelta(exercise)
     return weight - delta;
 }
+
+const displayWeight = async (exercise: number, weight: number): Promise<string> => {
+    if (await loadExerciseType(exercise) == 'body') {
+        let bodyWeight = await loadBodyWeight();
+        let diff = weight - bodyWeight;
+        if (diff == 0)
+            return String(weight);
+        let sign: string;
+        if (diff < 0)
+            sign = '-';
+        else
+            sign = '+';
+        return `${bodyWeight} ${sign} ${round(Math.abs(diff))}`;
+    }
+    return String(round(weight));
+}
+
+const ACCURACY = 1000;
+
+const round = (value: number): number => Math.round(ACCURACY*value)/ACCURACY;
 
 function getColour(): string {
     var letters = '0123456789ABCDEF';
@@ -45,4 +73,4 @@ function getColour(): string {
     return color;
 }
 
-export { calcWeight, calcReps, roundWeightDown, getColour, MAX_REPS, lowerWeight };
+export { calcWeight, calcReps, roundWeightDown, getColour, MAX_REPS, lowerWeight, displayWeight, round };
