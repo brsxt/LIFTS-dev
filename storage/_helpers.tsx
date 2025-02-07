@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { hashSet } from '../utils/types';
+import { hashSetAdd, hashSetRemove } from '../utils/utils';
 
 // AsyncStorage.clear();
 
@@ -34,15 +35,15 @@ async function del(key: string): Promise<void> {
 }
 
 async function addToHashSet(val: any, loadObject: () => Promise<hashSet>, saveObject: (x: hashSet) => Promise<void>): Promise<void> {
-    let obj = await loadObject();
-    obj[val] = 0;
-    await saveObject(obj);
+    let set = await loadObject();
+    hashSetAdd(val, set);
+    await saveObject(set);
 }
 
 async function removeFromHashSet(val: any, loadObject: () => Promise<hashSet>, saveObject: (x: hashSet) => Promise<void>): Promise<void> {
-    let obj = await loadObject();
-    delete obj[val];
-    await saveObject(obj);
+    let set = await loadObject();
+    hashSetRemove(val, set);
+    await saveObject(set);
 }
 
 async function addToList(val: any, loadList: () => Promise<any[]>, saveList: (x: any[]) => Promise<void>): Promise<void> {

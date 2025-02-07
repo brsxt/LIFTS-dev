@@ -44,7 +44,16 @@ const Exercise: React.FC<screenProps> = (props: screenProps) => {
         })();
     }, [])
     const tabs = [
-        <Track key='T' exercise={props.getProps().exercise!} weight={weight} changeWeight={setWeight} reps={reps} changeReps={setReps} extra={extra}/>,
+        <Track
+            key='T'
+            exercise={props.getProps().exercise!}
+            weight={weight}
+            changeWeight={setWeight}
+            reps={reps}
+            changeReps={setReps}
+            extra={extra}
+            screenProps={props}
+        />,
         <RepList key='R' exercise={props.getProps().exercise!}/>,
         <WeightList key='W' exercise={props.getProps().exercise!}/>
     ];

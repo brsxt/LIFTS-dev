@@ -1,5 +1,6 @@
-import { loadBodyWeight } from "../storage/body";
-import { loadExerciseDelta, loadExerciseType } from "../storage/exercises";
+import { loadBodyWeight } from '../storage/body';
+import { loadExerciseDelta, loadExerciseType } from '../storage/exercises';
+import { hashSet } from './types';
 
 let MAX_REPS = 20;
 
@@ -73,4 +74,24 @@ function getColour(): string {
     return color;
 }
 
-export { calcWeight, calcReps, roundWeightDown, getColour, MAX_REPS, lowerWeight, displayWeight, round };
+function hashSetAdd(val: any, set: hashSet): void {
+    set[val] = 0;
+}
+
+function hashSetRemove(val: any, set: hashSet): void {
+    delete set[val];
+}
+
+function hashSetToggle(val: any, set: hashSet): number {
+    let res: number = 0;
+    if (val in set) {
+        hashSetRemove(val, set);
+        res -= 1;
+    } else {
+        hashSetAdd(val, set);
+        res += 1;
+    }
+    return res;
+}
+
+export { calcWeight, calcReps, roundWeightDown, getColour, MAX_REPS, lowerWeight, displayWeight, round, hashSetAdd, hashSetRemove, hashSetToggle };

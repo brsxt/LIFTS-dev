@@ -16,7 +16,7 @@ const Delete: React.FC<screenProps> = (props: screenProps) => {
                 title="Confirm"
                 onPress={async () => {
                     await props.getProps().delete!();
-                    props.goBack(3);
+                    props.goBack(props.getProps().backDistance!);
                 }}
             />
         </View>

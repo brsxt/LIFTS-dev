@@ -22,6 +22,7 @@ type navigatorProps = {
     saveNewExercise?: () => Promise<number>;
     delete?: () => Promise<void>;
     getName?: () => Promise<string>;
+    backDistance?: number;
 }
 
 type pageProps = {
@@ -31,6 +32,7 @@ type pageProps = {
     reps?: number;
     changeReps?: (x: number) => void;
     extra?: number;
+    screenProps?: screenProps;
 }
 
 type inputNumProps = {
@@ -55,6 +57,7 @@ type listItemProps = {
 
 type rowProps = {
     data: (number|string)[];
+    selected?: boolean;
 }
 
 type selectorProps = {

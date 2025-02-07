@@ -1,21 +1,26 @@
-import { View, FlatList, Pressable, Button } from 'react-native';
+import { View, FlatList, Pressable, Button, Text } from 'react-native';
 import { useEffect, useState } from 'react';
 
-import { loadExerciseHistory, appendExerciseHistory, loadExerciseDelta } from '../storage/exercises';
+import { loadExerciseHistory, appendExerciseHistory, loadExerciseDelta, saveExerciseHistory } from '../storage/exercises';
 import { getColour, round } from '../utils/utils';
 import InputNum from '../components/inputNum';
 import Row from '../components/row';
-import { pageProps } from '../utils/types';
+import { hashSet, pageProps, set } from '../utils/types';
+import { hashSetToggle } from '../utils/utils';
 
 const Track: React.FC<pageProps> = (props: pageProps) => {
     const [data, setData] = useState<(number|string)[][]>([]);
     const [delta, setDelta] = useState<number>(1);
+    const [selected, setSelected] = useState<hashSet>({});
+    const [count, setCount] = useState<number>(0);
+    const [history, setHistory] = useState<set[]>([]);
     let weightText = 'weight';
     if (props.extra != 0) {
         weightText = 'extra weight';
     }
     const loadData = async () => {
         loadExerciseHistory(props.exercise).then((history) => {
+            setHistory(history);
             let data = [];
             for (let i in history) {
                 let item = history[i];
@@ -42,12 +47,21 @@ const Track: React.FC<pageProps> = (props: pageProps) => {
                 title={'reps'}
                 delta={1}
             />
-            <Button
-                title="Submit"
-                onPress={() =>
-                    appendExerciseHistory(props.exercise, Date.now(), props.weight! + props.extra!, props.reps! ).then(loadData)
-                }
-            />
+            {count == 1 && 
+                <Button
+                    title="Edit"
+                    onPress={() => {
+
+                    }}
+                />
+                ||
+                <Button
+                    title="Submit"
+                    onPress={() =>
+                        appendExerciseHistory(props.exercise, Date.now(), props.weight! + props.extra!, props.reps! ).then(loadData)
+                    }
+                />
+            }
             <FlatList
                 data={data}
                 ListHeaderComponent={
@@ -59,12 +73,37 @@ const Track: React.FC<pageProps> = (props: pageProps) => {
                     return (
                         <Pressable
                             key={index}
+                            onPress={(): void => {
+                                let temp: hashSet = {...selected};
+                                setCount(count + hashSetToggle(index, temp));
+                                setSelected(temp);
+                            }}
                         >
-                            <Row data={item}/>
+                            <Row data={item} selected={index in selected}/>
                         </Pressable>
                     )
                 }}
             />
+            {count > 0 &&
+                <Button
+                    title="Delete"
+                    onPress={() => {
+                        props.screenProps!.newProps({
+                            delete: async () => {
+                                let temp: set[] = [];
+                                history.forEach((item, index) => {
+                                    if (!(history.length - index - 1 in selected))
+                                        temp.push(item);
+                                });
+                                await saveExerciseHistory(props.exercise, temp);
+                            },
+                            getName: async () => 'these sets',
+                            backDistance: 1,
+                        });
+                        props.screenProps!.newPage('Delete');
+                    }}
+                />
+            }
         </View>
     );
 }

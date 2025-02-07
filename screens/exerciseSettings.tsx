@@ -23,6 +23,7 @@ const ExerciseSettings: React.FC<screenProps> = (props: screenProps) => {
                     props.newProps({
                         delete: async () => { await deleteExercise(props.getProps().exercise!) },
                         getName: async () => await loadExerciseName(props.getProps().exercise!),
+                        backDistance: 3,
                     });
                     props.newPage('Delete');
                 }}
@@ -45,6 +46,7 @@ const ExerciseSettings: React.FC<screenProps> = (props: screenProps) => {
                 title={'Minimum rep recommendation'}
                 min={1}
                 max={maxRepRec}
+                delta={1}
             />
             <InputNum
                 value={maxRepRec}
@@ -52,6 +54,7 @@ const ExerciseSettings: React.FC<screenProps> = (props: screenProps) => {
                 title={'Maximum rep recommendation'}
                 min={minRepRec}
                 max={MAX_REPS}
+                delta={1}
             />
             <Selector
                 data={TYPES}
@@ -64,6 +67,7 @@ const ExerciseSettings: React.FC<screenProps> = (props: screenProps) => {
                     changeValue={setDelta}
                     title={'delta'}
                     min={0}
+                    delta={0.25}
                 />
             }
             <Button
