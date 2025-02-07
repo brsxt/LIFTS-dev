@@ -51,7 +51,15 @@ const Track: React.FC<pageProps> = (props: pageProps) => {
                 <Button
                     title="Edit"
                     onPress={() => {
-
+                        let temp: set[] = [];
+                        history.forEach((item, index) => {
+                            if (history.length - index - 1 in selected) {
+                                temp.push({time: item.time, weight: props.weight! + props.extra!, reps: props.reps!});
+                            } else {
+                                temp.push(item);
+                            }
+                        });
+                        saveExerciseHistory(props.exercise, temp).then(loadData);
                     }}
                 />
                 ||
