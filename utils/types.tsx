@@ -50,7 +50,7 @@ type itemProps = {
 type listItemProps = {
     text?: string;
     getText?: () => Promise<string>;
-    onPress: () => void;
+    onPress?: () => void;
 }
 
 type rowProps = {

@@ -1,12 +1,39 @@
 import { useEffect, useState } from 'react';
-import { View, TextInput, Button } from 'react-native';
+import { View, TextInput, Button, FlatList } from 'react-native';
 
-import { loadDayName, saveDayName } from '../storage/days';
-import { screenProps } from '../utils/types';
-import { deleteDay } from '../storage/both';
+import { loadDayName, saveDayName, loadDayExercises } from '../storage/days';
+import { hashSet, screenProps } from '../utils/types';
+import { deleteDay, addDayExercise, deleteDayExercise } from '../storage/both';
+import ListItem from '../components/listItem';
+import { getColour } from '../utils/utils';
+import { loadExerciseList, loadExerciseName } from '../storage/exercises';
+
+const move = (index: number, start: number[], setStart: (x: number[]) => void, dest: number[], setDest: (x: number[]) => void) => {
+    start = [...start]
+    dest = [...dest]
+    let item: number | undefined = start[index];
+    if (item !== undefined) {
+        start.splice(index, 1)
+        dest.push(item);
+    }
+    setStart(start);
+    setDest(dest);
+}
+
+async function updateDayExercises(day: number, included: number[], excluded: number[], includedSet: hashSet): Promise<void> {
+    for (let item of excluded)
+        if (item in includedSet)
+            await deleteDayExercise(day, item);
+    for (let item of included)
+        if (!(item in includedSet))
+            await addDayExercise(day, item);
+}
 
 const DaySettings: React.FC<screenProps> = (props: screenProps) => {
     const [name, setName] = useState('');
+    const [includedSet, setIncludedSet] = useState<hashSet>({});
+    const [included, setIncluded] = useState<number[]>([]);
+    const [excluded, setExcluded] = useState<number[]>([]);
     useEffect(() => {
         props.setHeaderRight(
             <Button
@@ -21,14 +48,63 @@ const DaySettings: React.FC<screenProps> = (props: screenProps) => {
             />
         )
         loadDayName(props.getProps().day!).then(result => {setName(result)});
+        (async (): Promise<void> => {
+            let includedSet: hashSet = await loadDayExercises(props.getProps().day!);
+            setIncludedSet(includedSet);
+            let exerciseList: number[] = await loadExerciseList();
+            let included: number[] = [];
+            let excluded: number[] = [];
+            for (let item of exerciseList) {
+                if (item in includedSet) {
+                    included.push(item);
+                } else {
+                    excluded.push(item);
+                }
+            }
+            setIncluded(included);
+            setExcluded(excluded);
+        })();
     }, []);
     return (
         <View>
             <TextInput value={name} onChangeText={setName}/>
+            <View style={[{backgroundColor: getColour(), flex: 1}, {flexDirection: 'row'}]}>
+                <FlatList
+                    style={[{backgroundColor: getColour(), flex: 1},]}
+                    data={included}
+                    ListHeaderComponent={<ListItem text={'included'}/>}
+                    renderItem={({index, item}) => {
+                        return (
+                            <ListItem
+                                getText={() => loadExerciseName(item)}
+                                onPress={() => {
+                                    move(index, included, setIncluded, excluded, setExcluded);
+                                }}
+                            />
+                        )
+                    }}
+                />
+                <FlatList
+                    style={[{backgroundColor: getColour(), flex: 1},]}
+                    data={excluded}
+                    ListHeaderComponent={<ListItem text={'excluded'}/>}
+                    renderItem={({index, item}) => {
+                        return (
+                            <ListItem
+                                getText={() => loadExerciseName(item)}
+                                onPress={() => {
+                                    move(index, excluded, setExcluded, included, setIncluded);
+                                }}
+                            />
+                        )
+                    }}
+                />
+            </View>
             <Button
                 title="Save"
                 onPress={async () => {
                     await saveDayName(props.getProps().day!, name)
+                    await updateDayExercises(props.getProps().day!, included, excluded, includedSet);
                     props.goBack();
                 }}
             />
