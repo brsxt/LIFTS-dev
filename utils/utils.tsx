@@ -85,4 +85,11 @@ function hashSetToggle(val: any, set: hashSet): number {
     return res;
 }
 
-export { calcWeight, calcReps, roundWeightDown, MAX_REPS, lowerWeight, displayWeight, round, hashSetAdd, hashSetRemove, hashSetToggle };
+function titleCase(str: string) {
+    return str.replace(
+        /\w\S*/g,
+        text => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase()
+    );
+}
+
+export { calcWeight, calcReps, roundWeightDown, MAX_REPS, lowerWeight, displayWeight, round, hashSetAdd, hashSetRemove, hashSetToggle, titleCase };

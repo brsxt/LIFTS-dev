@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text } from 'react-native';
 
 import { screenProps } from '../utils/types';
+import Button from '../components/button';
+import { getStyle } from '../utils/styles';
 
 const Delete: React.FC<screenProps> = (props: screenProps) => {
     const [name, setName] = useState('');
@@ -11,7 +13,7 @@ const Delete: React.FC<screenProps> = (props: screenProps) => {
     }, []);
     return (
         <View>
-            <Text>{`Are you sure you want to delete ${name}?`}</Text>
+            <Text style={getStyle()}>{`Are you sure you want to delete ${name}?`}</Text>
             <Button
                 title="Confirm"
                 onPress={async () => {

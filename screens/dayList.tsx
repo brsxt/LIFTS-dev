@@ -1,4 +1,4 @@
-import { FlatList, Button } from 'react-native';
+import { FlatList } from 'react-native';
 import { useEffect, useState } from 'react';
 
 import { loadDayList, saveNewDay, loadDayName, loadDayExerciseList } from '../storage/days';
@@ -7,6 +7,7 @@ import { addDayExercise } from '../storage/both';
 import { getStyle } from '../utils/styles';
 import ListItem from '../components/listItem';
 import { screenProps } from '../utils/types';
+import Button from '../components/button';
 
 const DayList: React.FC<screenProps> = (props: screenProps) => {
     const [dayList, setDayList] = useState<number[]>([]);

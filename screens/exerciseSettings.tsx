@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
-import { View, TextInput, Button } from 'react-native';
+import { View, TextInput } from 'react-native';
 
 import { loadExerciseType, loadExerciseName, loadExerciseMinRepRec, loadExerciseMaxRepRec, saveExerciseName, loadExerciseDelta, saveExerciseMinRepRec, saveExerciseMaxRepRec, saveExerciseType, saveExerciseDelta, TYPES } from '../storage/exercises';
-import { addDayExercise, deleteExercise } from '../storage/both';
+import { deleteExercise } from '../storage/both';
 import { MAX_REPS } from '../utils/utils';
-import ListItem from '../components/listItem';
 import Selector from '../components/selector';
 import InputNum from '../components/inputNum';
 import { screenProps } from '../utils/types';
+import Button from '../components/button';
+import { getStyle } from '../utils/styles';
 
 const ExerciseSettings: React.FC<screenProps> = (props: screenProps) => {
     const [name, setName] = useState('');
@@ -38,8 +39,8 @@ const ExerciseSettings: React.FC<screenProps> = (props: screenProps) => {
         loadExerciseDelta(props.getProps().exercise!).then(result => {setDelta(result);});
     }, []);
     return (
-        <View>
-            <TextInput value={name} onChangeText={setName}/>
+        <View style={[getStyle(), {flex: 1}]}>
+            <TextInput style={getStyle()} value={name} onChangeText={setName}/>
             <InputNum
                 value={minRepRec}
                 changeValue={setMinRepRec}
@@ -65,7 +66,7 @@ const ExerciseSettings: React.FC<screenProps> = (props: screenProps) => {
                 <InputNum
                     value={delta}
                     changeValue={setDelta}
-                    title={'delta'}
+                    title={'Delta'}
                     min={0}
                     delta={0.25}
                 />

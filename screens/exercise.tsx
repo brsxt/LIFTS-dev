@@ -1,4 +1,4 @@
-import { View, Button } from 'react-native';
+import { View } from 'react-native';
 import { useState, useEffect } from 'react';
 
 import { round } from '../utils/utils';
@@ -10,6 +10,7 @@ import { loadExerciseHistory, loadExerciseName, loadExerciseType } from '../stor
 import { loadBodyWeight } from '../storage/profile';
 import { screenProps, set } from '../utils/types';
 import { getStyle } from '../utils/styles';
+import Button from '../components/button';
 
 const Exercise: React.FC<screenProps> = (props: screenProps) => {
     const [tab, setTab] = useState<number>(0);

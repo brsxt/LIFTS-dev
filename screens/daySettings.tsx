@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { View, TextInput, Button, FlatList } from 'react-native';
+import { View, TextInput, FlatList } from 'react-native';
 
 import { loadDayName, saveDayName, loadDayExercises } from '../storage/days';
 import { hashSet, screenProps } from '../utils/types';
@@ -7,6 +7,7 @@ import { deleteDay, addDayExercise, deleteDayExercise } from '../storage/both';
 import ListItem from '../components/listItem';
 import { getStyle } from '../utils/styles';
 import { loadExerciseList, loadExerciseName } from '../storage/exercises';
+import Button from '../components/button';
 
 const move = (index: number, start: number[], setStart: (x: number[]) => void, dest: number[], setDest: (x: number[]) => void) => {
     start = [...start]

@@ -1,15 +1,16 @@
 import { Text, View, TextStyle } from 'react-native';
 
-import { rowProps } from '../utils/types';
+import { globalStyle, rowProps } from '../utils/types';
 import { getStyle } from '../utils/styles';
 
 const Row: React.FC<rowProps> = (props: rowProps) => {
-    let customStyle: TextStyle = {textAlign: 'center', color: 'black'};
+    let customStyle: TextStyle = {textAlign: 'center'};
+    let style: globalStyle = getStyle();
     if (props.selected)
-        customStyle.color='white'
+        style.color=style.accent;
     return (
-        <View style={[getStyle(), {flex: 1}, {flexDirection: 'row'}]}>
-            {props.data.map((item, index) => <Text key={index} style={[getStyle(), {flex: 1}, customStyle]}>{item}</Text>)}
+        <View style={[style, {flex: 1}, {flexDirection: 'row'}]}>
+            {props.data.map((item, index) => <Text key={index} style={[style, {flex: 1}, customStyle]}>{item}</Text>)}
         </View>
     );
 }

@@ -9,6 +9,9 @@ const styles = StyleSheet.create({
         padding: 5,
         fontSize: 15,
     },
+    buttonStyle: {
+        padding: 5,
+    }
 });
 
 const STYLES = ['dev', 'light', 'dark']

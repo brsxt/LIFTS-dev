@@ -1,4 +1,4 @@
-import { View, FlatList, Pressable, Button, Text } from 'react-native';
+import { View, FlatList, Pressable } from 'react-native';
 import { useEffect, useState } from 'react';
 
 import { loadExerciseHistory, appendExerciseHistory, loadExerciseDelta, saveExerciseHistory } from '../storage/exercises';
@@ -8,6 +8,7 @@ import Row from '../components/row';
 import { hashSet, pageProps, set } from '../utils/types';
 import { hashSetToggle } from '../utils/utils';
 import { getStyle } from '../utils/styles';
+import Button from '../components/button';
 
 const Track: React.FC<pageProps> = (props: pageProps) => {
     const [data, setData] = useState<(number|string)[][]>([]);
@@ -15,9 +16,9 @@ const Track: React.FC<pageProps> = (props: pageProps) => {
     const [selected, setSelected] = useState<hashSet>({});
     const [count, setCount] = useState<number>(0);
     const [history, setHistory] = useState<set[]>([]);
-    let weightText = 'weight';
+    let weightText = 'Weight';
     if (props.extra != 0) {
-        weightText = 'extra weight';
+        weightText = 'Extra weight';
     }
     const loadData = async () => {
         loadExerciseHistory(props.exercise).then((history) => {
@@ -45,7 +46,7 @@ const Track: React.FC<pageProps> = (props: pageProps) => {
             <InputNum
                 value={props.reps!}
                 changeValue={props.changeReps!}
-                title={'reps'}
+                title={'Reps'}
                 delta={1}
             />
             {count == 1 && 
@@ -74,7 +75,7 @@ const Track: React.FC<pageProps> = (props: pageProps) => {
             <FlatList
                 data={data}
                 ListHeaderComponent={
-                    <Row data={['date', 'reps', 'weight']}/>
+                    <Row data={['Date', 'Reps', 'Weight']}/>
                 }
                 renderItem={({index, item}) => {
                     item = [...item]

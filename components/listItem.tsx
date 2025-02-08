@@ -8,7 +8,6 @@ const ListItem: React.FC<listItemProps> = (props: listItemProps) => {
     let style: globalStyle = getStyle();
     if (props.selected !== undefined && !props.selected)
         style.backgroundColor = style.backgroundDark;
-    console.log(props.text, style);
     return (
         <Pressable
             style={[{flex: 1}, style]}

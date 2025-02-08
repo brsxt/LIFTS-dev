@@ -90,4 +90,10 @@ type contextAccess = {
     setState: (x: contextDetails) => void;
 }
 
-export { hashSet, set, screenProps, navigatorProps, pageProps, inputNumProps, itemProps, listItemProps, rowProps, selectorProps, weightListRow, globalStyle, contextDetails, contextAccess };
+type buttonProps = {
+    onPress: () => void;
+    title: string;
+    bold?: boolean;
+}
+
+export { hashSet, set, screenProps, navigatorProps, pageProps, inputNumProps, itemProps, listItemProps, rowProps, selectorProps, weightListRow, globalStyle, contextDetails, contextAccess, buttonProps };

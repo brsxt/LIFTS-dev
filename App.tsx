@@ -1,4 +1,4 @@
-import { SafeAreaView, View, Button, StatusBar } from 'react-native';
+import { SafeAreaView, View, StatusBar } from 'react-native';
 import { useState } from 'react';
 
 import Exercise from './screens/exercise';
@@ -12,6 +12,7 @@ import Delete from './screens/delete';
 import Profile from './screens/profile';
 import { ContextProvider } from './context';
 import { getStyle } from './utils/styles';
+import Button from './components/button';
 
 export default function App() {
     //page and props are arrays to implement back functionality
@@ -33,7 +34,7 @@ export default function App() {
         <ContextProvider>
             <SafeAreaView style={{width: '100%', height: '100%', marginTop:StatusBar.currentHeight}}>
                 <View style={[getStyle(), {flexDirection: 'row'}]}>
-                        {page.length > 1 && <Button title='back' onPress={() => goBack(1)}/>}
+                        {page.length > 1 && <Button title='Back' onPress={() => goBack(1)}/>}
                         <Item
                             text={title}
                         />

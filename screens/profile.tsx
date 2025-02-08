@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import { View, Button } from 'react-native';
+import { View } from 'react-native';
 
 import { screenProps } from '../utils/types';
 import { loadBodyWeight, saveBodyWeight, saveTheme } from '../storage/profile';
@@ -7,6 +7,7 @@ import InputNum from '../components/inputNum';
 import Selector from '../components/selector';
 import { STYLES, getStyle } from '../utils/styles';
 import { globalContext } from '../context';
+import Button from '../components/button';
 
 const Profile: React.FC<screenProps> = (props: screenProps) => {
     const [bodyweight, setBodyweight] = useState(0);
