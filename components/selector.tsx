@@ -1,16 +1,16 @@
 import { Text, View } from 'react-native';
 import Checkbox from 'expo-checkbox';
 
-import { getColour } from '../utils/utils';
 import { selectorProps } from '../utils/types';
+import { getStyle } from '../utils/styles';
 
 const Selector: React.FC<selectorProps> = (props: selectorProps) => {
     return (
-        <View style={[{backgroundColor: getColour(), flex: 1}]}>
+        <View style={[getStyle(), {flex: 1}]}>
             {props.data.map((item, index) => {
                 return (
                     <View
-                        style={[{backgroundColor: getColour()}, {flexDirection: 'row'}]}
+                        style={[getStyle(), {flexDirection: 'row'}]}
                         key={index}
                     >
                         <Checkbox

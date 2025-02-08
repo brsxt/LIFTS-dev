@@ -1,9 +1,9 @@
 import { Text } from 'react-native';
 import { useEffect, useState } from 'react';
 
-import { getColour } from '../utils/utils';
+import { getStyle } from '../utils/styles';
 import styles from '../utils/styles';
-import { itemProps } from '../utils/types';
+import { globalStyle, itemProps } from '../utils/types';
 
 const Item: React.FC<itemProps> = (props: itemProps) => {
     const [text, setText] = useState(props.text);
@@ -11,8 +11,9 @@ const Item: React.FC<itemProps> = (props: itemProps) => {
         if (props.getText)
             props.getText().then((result) => setText(result));
     }, []);
+    let style: globalStyle = props.style || getStyle();
     return (
-        <Text style={[{backgroundColor: getColour(), flex: 1}, styles.listItemText]}>{text}</Text>
+        <Text style={[style, {flex: 1}, styles.listItemText]}>{text}</Text>
     )
 }
 

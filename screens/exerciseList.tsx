@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 import { loadDayName } from '../storage/days';
 import { loadExerciseName } from '../storage/exercises';
-import { getColour } from '../utils/utils';
+import { getStyle } from '../utils/styles';
 import ListItem from '../components/listItem';
 import { screenProps } from '../utils/types';
 
@@ -30,7 +30,7 @@ const ExerciseList: React.FC<screenProps> = (props: screenProps) => {
     }, []);
     return (
         <FlatList
-            style={[{backgroundColor: getColour(), flex: 1},]}
+            style={[getStyle(), {flex: 1},]}
             data={exerciseList}
             renderItem={({item}) => {
                 return (

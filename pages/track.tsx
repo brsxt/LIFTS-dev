@@ -2,11 +2,12 @@ import { View, FlatList, Pressable, Button, Text } from 'react-native';
 import { useEffect, useState } from 'react';
 
 import { loadExerciseHistory, appendExerciseHistory, loadExerciseDelta, saveExerciseHistory } from '../storage/exercises';
-import { getColour, round } from '../utils/utils';
+import { round } from '../utils/utils';
 import InputNum from '../components/inputNum';
 import Row from '../components/row';
 import { hashSet, pageProps, set } from '../utils/types';
 import { hashSetToggle } from '../utils/utils';
+import { getStyle } from '../utils/styles';
 
 const Track: React.FC<pageProps> = (props: pageProps) => {
     const [data, setData] = useState<(number|string)[][]>([]);
@@ -34,7 +35,7 @@ const Track: React.FC<pageProps> = (props: pageProps) => {
         loadData();
     }, [])
     return (
-        <View style={[{backgroundColor: getColour(), flex: 1}]}>
+        <View style={[{flex: 1}, getStyle()]}>
             <InputNum
                 value={props.weight!}
                 changeValue={props.changeWeight!}

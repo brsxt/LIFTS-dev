@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { loadDayList, saveNewDay, loadDayName, loadDayExerciseList } from '../storage/days';
 import { loadExerciseList, saveNewExercise } from '../storage/exercises';
 import { addDayExercise } from '../storage/both';
-import { getColour } from '../utils/utils';
+import { getStyle } from '../utils/styles';
 import ListItem from '../components/listItem';
 import { screenProps } from '../utils/types';
 
@@ -24,7 +24,7 @@ const DayList: React.FC<screenProps> = (props: screenProps) => {
     }, []);
     return (
         <FlatList
-            style={[{backgroundColor: getColour(), flex: 1},]}
+            style={[getStyle(), {flex: 1},]}
             data={dayList}
             ListHeaderComponent={
                 <ListItem

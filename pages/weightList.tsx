@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 
 import { loadExerciseHistory, loadExerciseDelta } from '../storage/exercises';
 import { calcWeight, roundWeightDown, MAX_REPS, lowerWeight, calcReps, displayWeight } from '../utils/utils';
-import styles from '../utils/styles';
 import Row from '../components/row';
 import { pageProps, weightListRow } from '../utils/types';
 

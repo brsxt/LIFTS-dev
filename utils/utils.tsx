@@ -1,4 +1,4 @@
-import { loadBodyWeight } from '../storage/body';
+import { loadBodyWeight } from '../storage/profile';
 import { loadExerciseDelta, loadExerciseType } from '../storage/exercises';
 import { hashSet } from './types';
 
@@ -65,15 +65,6 @@ const ACCURACY = 1000;
 
 const round = (value: number): number => Math.round(ACCURACY*value)/ACCURACY;
 
-function getColour(): string {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++) {
-        color += letters[Math.floor(8 + Math.random() * 8)];
-    }
-    return color;
-}
-
 function hashSetAdd(val: any, set: hashSet): void {
     set[val] = 0;
 }
@@ -94,4 +85,4 @@ function hashSetToggle(val: any, set: hashSet): number {
     return res;
 }
 
-export { calcWeight, calcReps, roundWeightDown, getColour, MAX_REPS, lowerWeight, displayWeight, round, hashSetAdd, hashSetRemove, hashSetToggle };
+export { calcWeight, calcReps, roundWeightDown, MAX_REPS, lowerWeight, displayWeight, round, hashSetAdd, hashSetRemove, hashSetToggle };

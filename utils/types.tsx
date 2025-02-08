@@ -47,12 +47,14 @@ type inputNumProps = {
 type itemProps = {
     text?: string;
     getText?: () => Promise<string>;
+    style?: globalStyle;
 }
 
 type listItemProps = {
     text?: string;
     getText?: () => Promise<string>;
     onPress?: () => void;
+    selected?: boolean;
 }
 
 type rowProps = {
@@ -72,4 +74,20 @@ type weightListRow = {
     rec: number;
 }
 
-export { hashSet, set, screenProps, navigatorProps, pageProps, inputNumProps, itemProps, listItemProps, rowProps, selectorProps, weightListRow };
+type globalStyle = {
+    backgroundColor: string;
+    backgroundDark: string;
+    color: string;
+    accent: string;
+}
+
+type contextDetails = {
+    theme: string;
+}
+
+type contextAccess = {
+    state: contextDetails;
+    setState: (x: contextDetails) => void;
+}
+
+export { hashSet, set, screenProps, navigatorProps, pageProps, inputNumProps, itemProps, listItemProps, rowProps, selectorProps, weightListRow, globalStyle, contextDetails, contextAccess };

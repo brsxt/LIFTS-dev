@@ -1,14 +1,15 @@
 import { View, Button } from 'react-native';
 import { useState, useEffect } from 'react';
 
-import { getColour, round } from '../utils/utils';
+import { round } from '../utils/utils';
 import ListItem from '../components/listItem';
 import Track from '../pages/track';
 import WeightList from '../pages/weightList';
 import RepList from '../pages/repList';
 import { loadExerciseHistory, loadExerciseName, loadExerciseType } from '../storage/exercises';
-import { loadBodyWeight } from '../storage/body';
+import { loadBodyWeight } from '../storage/profile';
 import { screenProps, set } from '../utils/types';
+import { getStyle } from '../utils/styles';
 
 const Exercise: React.FC<screenProps> = (props: screenProps) => {
     const [tab, setTab] = useState<number>(0);
@@ -60,14 +61,15 @@ const Exercise: React.FC<screenProps> = (props: screenProps) => {
     const names = ['Track', 'Best', 'Next'];
     return (
         <View
-            style={[{backgroundColor: getColour(), flex: 1},]}
+            style={[getStyle(), {flex: 1},]}
         >
-            <View style={[{backgroundColor: getColour()}, {flexDirection: 'row'}]}>
+            <View style={[getStyle(), {flexDirection: 'row'}]}>
                 {tabs.map((_, index) =>
                     <ListItem
                         text={names[index]}
                         onPress={() => setTab(index)}
                         key={index}
+                        selected={tab == index}
                     />
                 )}
             </View>
