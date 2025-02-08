@@ -14,8 +14,8 @@ import Button from '../components/button';
 
 const Exercise: React.FC<screenProps> = (props: screenProps) => {
     const [tab, setTab] = useState<number>(0);
-    const [weight, setWeight] = useState<number>(0);
-    const [reps, setReps] = useState<number>(0);
+    const [weight, setWeight] = useState<string>(String(0));
+    const [reps, setReps] = useState<string>(String(0));
     const [extra, setExtra] = useState<number>(0);
     useEffect(() => {
         (async (): Promise<void> => {
@@ -38,8 +38,8 @@ const Exercise: React.FC<screenProps> = (props: screenProps) => {
             }
             let history: set[] = await loadExerciseHistory(props.getProps().exercise!);
             if (history.length > 0) {
-                setWeight(round(history[history.length-1].weight - extra));
-                setReps(history[history.length-1].reps);
+                setWeight(String(round(history[history.length-1].weight - extra)));
+                setReps(String(history[history.length-1].reps));
             }
             let name: string = await loadExerciseName(props.getProps().exercise!);
             props.setTitle(name);

@@ -68,8 +68,8 @@ const DaySettings: React.FC<screenProps> = (props: screenProps) => {
         })();
     }, []);
     return (
-        <View>
-            <TextInput style={getStyle()} value={name} onChangeText={setName}/>
+        <View style={{flex: 1}}>
+            <TextInput style={[getStyle(), {fontSize: 15, padding: 5}]} value={name} onChangeText={setName}/>
             <View style={[getStyle(), {flex: 1}, {flexDirection: 'row'}]}>
                 <FlatList
                     style={[getStyle(), {flex: 1},]}

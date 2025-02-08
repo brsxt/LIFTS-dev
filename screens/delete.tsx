@@ -12,7 +12,7 @@ const Delete: React.FC<screenProps> = (props: screenProps) => {
         props.getProps().getName!().then((name: string): void => { setName(name); });
     }, []);
     return (
-        <View>
+        <View style={{flex: 1}}>
             <Text style={getStyle()}>{`Are you sure you want to delete ${name}?`}</Text>
             <Button
                 title="Confirm"

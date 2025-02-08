@@ -9,7 +9,7 @@ const Button: React.FC<buttonProps> = (props: buttonProps) => {
     style.color = style.accent;
     return (
         <TouchableOpacity style={[style, styles.buttonStyle]} onPress={props.onPress}>
-            <Text style={[style, props.bold && {fontSize: 20}]}>{props.title}</Text>
+            <Text style={[style, props.bold && {fontSize: 20}, {textAlign: 'center'}]}>{props.title}</Text>
         </TouchableOpacity>
     )
 }

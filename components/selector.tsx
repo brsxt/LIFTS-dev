@@ -8,7 +8,7 @@ import { titleCase } from '../utils/utils';
 const Selector: React.FC<selectorProps> = (props: selectorProps) => {
     let padding = 5;
     return (
-        <View style={[getStyle(), {flex: 1}]}>
+        <View style={[getStyle(), {width: '100%'}]}>
             {props.data.map((item, index) => {
                 return (
                     <Pressable

@@ -13,7 +13,7 @@ async function load(key: string, val: any): Promise<any> {
             return result;
         }
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
     return val;
 }
@@ -22,7 +22,7 @@ async function save(key: string, val: any): Promise<void> {
     try {
         await AsyncStorage.setItem(key, JSON.stringify(val));
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 }
 
@@ -30,7 +30,7 @@ async function del(key: string): Promise<void> {
     try {
         await AsyncStorage.removeItem(key);
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 }
 

@@ -10,12 +10,12 @@ import { globalContext } from '../context';
 import Button from '../components/button';
 
 const Profile: React.FC<screenProps> = (props: screenProps) => {
-    const [bodyweight, setBodyweight] = useState(0);
+    const [bodyweight, setBodyweight] = useState<string>(String(0));
     const [style, setStyle] = useState(0);
     let context = useContext(globalContext)
     useEffect(() => {
         props.setHeaderRight(undefined)
-        loadBodyWeight().then(result => { setBodyweight(result) });
+        loadBodyWeight().then(result => { setBodyweight(String(result)) });
         setStyle(STYLES.indexOf(context.state.theme));
     }, []);
     return (
@@ -25,11 +25,12 @@ const Profile: React.FC<screenProps> = (props: screenProps) => {
                 changeValue={setBodyweight}
                 title={'bodyweight'}
                 delta={1}
+                decimals={true}
             />
             <Button
                 title="Save"
                 onPress={async () => {
-                    await saveBodyWeight(bodyweight);
+                    await saveBodyWeight(Number(bodyweight));
                     props.goBack();
                 }}
             />

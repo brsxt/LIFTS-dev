@@ -27,21 +27,22 @@ type navigatorProps = {
 
 type pageProps = {
     exercise: number;
-    weight?: number;
-    changeWeight?: (x: number) => void;
-    reps?: number;
-    changeReps?: (x: number) => void;
+    weight?: string;
+    changeWeight?: (x: string) => void;
+    reps?: string;
+    changeReps?: (x: string) => void;
     extra?: number;
     screenProps?: screenProps;
 }
 
 type inputNumProps = {
-    value: number;
-    changeValue: (x: number) => void;
+    value: string;
+    changeValue: (x: string) => void;
     title: string;
     min?: number;
     max?: number;
     delta: number;
+    decimals: boolean;
 }
 
 type itemProps = {

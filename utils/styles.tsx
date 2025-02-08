@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
     },
     buttonStyle: {
         padding: 5,
+        justifyContent: 'center',
     }
 });
 
@@ -33,7 +34,7 @@ function getStyle(): globalStyle {
                 backgroundColor: getColour(),
                 backgroundDark: getColour(),
                 color: 'black',
-                accent: getColour(),
+                accent: 'black',
             };
             break;
         case 'light':
@@ -46,8 +47,8 @@ function getStyle(): globalStyle {
             break;
         case 'dark':
             res = {
-                backgroundColor: '#404040',
-                backgroundDark: '#262626',
+                backgroundColor: '#303030',
+                backgroundDark: '#282828',
                 color: 'white',
                 accent: '#ffac30',
             };

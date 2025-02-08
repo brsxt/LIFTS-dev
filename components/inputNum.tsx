@@ -1,6 +1,6 @@
 import { Text, View, TextInput } from 'react-native';
 
-import { round } from '../utils/utils';
+import { round, isNumber } from '../utils/utils';
 import { inputNumProps } from '../utils/types';
 import { getStyle } from '../utils/styles';
 import Button from './button';
@@ -13,11 +13,19 @@ const InputNum: React.FC<inputNumProps> = (props: inputNumProps) => {
             </View>
             <View style={{flexDirection: 'row', flex: 2}}>
                 <Button bold={true} title='-' onPress={() => {
-                    props.changeValue(Math.max(props.min || 0, round(props.value - props.delta)));
+                    props.changeValue(String(Math.max(props.min || 0, round(Number(props.value) - props.delta))));
                 }}/>
-                <TextInput style={getStyle()} onChangeText={(x: string): void => { props.changeValue(Number(x)); }} value={props.value.toString()}/>
+                <TextInput
+                    style={[getStyle(), {textAlign: 'center'}]}
+                    onChangeText={(x: string): void => {
+                        isNumber(x)
+                            && (props.decimals || !x.includes('.'))
+                            && props.changeValue(x);
+                    }}
+                    value={props.value}
+                />
                 <Button bold={true} title='+' onPress={() => {
-                    props.changeValue(Math.min(props.max || 999999, round(props.value + props.delta)));
+                    props.changeValue(String(Math.min(props.max || 999999, round(Number(props.value) + props.delta))));
                 }}/>
             </View>
         </View>

@@ -85,11 +85,15 @@ function hashSetToggle(val: any, set: hashSet): number {
     return res;
 }
 
-function titleCase(str: string) {
+function titleCase(str: string): string {
     return str.replace(
         /\w\S*/g,
         text => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase()
     );
 }
 
-export { calcWeight, calcReps, roundWeightDown, MAX_REPS, lowerWeight, displayWeight, round, hashSetAdd, hashSetRemove, hashSetToggle, titleCase };
+function isNumber(s: string): boolean {
+    return s.match(/^\d*\.?\d*$/) != null;
+}
+
+export { calcWeight, calcReps, roundWeightDown, MAX_REPS, lowerWeight, displayWeight, round, hashSetAdd, hashSetRemove, hashSetToggle, titleCase, isNumber };

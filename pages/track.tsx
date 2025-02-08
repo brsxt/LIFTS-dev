@@ -42,12 +42,14 @@ const Track: React.FC<pageProps> = (props: pageProps) => {
                 changeValue={props.changeWeight!}
                 title={weightText}
                 delta={delta}
+                decimals={true}
             />
             <InputNum
                 value={props.reps!}
                 changeValue={props.changeReps!}
                 title={'Reps'}
                 delta={1}
+                decimals={false}
             />
             {count == 1 && 
                 <Button
@@ -56,7 +58,7 @@ const Track: React.FC<pageProps> = (props: pageProps) => {
                         let temp: set[] = [];
                         history.forEach((item, index) => {
                             if (history.length - index - 1 in selected) {
-                                temp.push({time: item.time, weight: props.weight! + props.extra!, reps: props.reps!});
+                                temp.push({time: item.time, weight: Number(props.weight)! + props.extra!, reps: Number(props.reps)!});
                             } else {
                                 temp.push(item);
                             }
@@ -68,7 +70,7 @@ const Track: React.FC<pageProps> = (props: pageProps) => {
                 <Button
                     title="Submit"
                     onPress={() =>
-                        appendExerciseHistory(props.exercise, Date.now(), props.weight! + props.extra!, props.reps! ).then(loadData)
+                        appendExerciseHistory(props.exercise, Date.now(), Number(props.weight)! + props.extra!, Number(props.reps)! ).then(loadData)
                     }
                 />
             }
