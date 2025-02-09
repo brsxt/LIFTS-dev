@@ -19,7 +19,7 @@ const JSON: React.FC<screenProps> = (props: screenProps) => {
         }
     }, []);
     return (
-        <View style={{flex: 1}}>
+        <View style={[getStyle(), {flex: 1}]}>
             <TextInput
                 style={[getStyle(), {flex: 1, fontFamily: 'monospace'}]}
                 onChangeText={setData}

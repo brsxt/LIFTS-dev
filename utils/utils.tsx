@@ -46,6 +46,7 @@ const lowerWeight = async (exercise: number, weight: number): Promise<number> =>
 }
 
 const displayWeight = async (exercise: number, weight: number): Promise<string> => {
+    let delta = await loadExerciseDelta(exercise);
     if (await loadExerciseType(exercise) == 'body') {
         let bodyWeight = await loadBodyWeight();
         let diff = weight - bodyWeight;
@@ -56,14 +57,14 @@ const displayWeight = async (exercise: number, weight: number): Promise<string> 
             sign = '-';
         else
             sign = '+';
-        return `${bodyWeight} ${sign} ${round(Math.abs(diff))}`;
+        return `${bodyWeight} ${sign} ${round(Math.abs(diff), 10**Math.max(countDecimals(delta), 1))}`;
     }
-    return String(round(weight));
+    return String(round(weight, 10**Math.max(countDecimals(delta), 1)));
 }
 
 const ACCURACY = 1000;
 
-const round = (value: number): number => Math.round(ACCURACY*value)/ACCURACY;
+const round = (value: number, accuracy: number = ACCURACY): number => Math.round(accuracy*value)/accuracy;
 
 function hashSetAdd(val: any, set: hashSet): void {
     set[val] = 0;
@@ -96,4 +97,9 @@ function isNumber(s: string): boolean {
     return s.match(/^\d*\.?\d*$/) != null;
 }
 
-export { calcWeight, calcReps, roundWeightDown, MAX_REPS, lowerWeight, displayWeight, round, hashSetAdd, hashSetRemove, hashSetToggle, titleCase, isNumber };
+function countDecimals(x: number) {
+    if(Math.floor(x) === x) return 0;
+    return String(x).split(".")[1].length || 0; 
+}
+
+export { calcWeight, calcReps, roundWeightDown, MAX_REPS, lowerWeight, displayWeight, round, hashSetAdd, hashSetRemove, hashSetToggle, titleCase, isNumber, countDecimals };

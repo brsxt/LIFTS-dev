@@ -1,4 +1,4 @@
-import { View, FlatList, Pressable } from 'react-native';
+import { View, Pressable } from 'react-native';
 import { useEffect, useState } from 'react';
 
 import { loadExerciseHistory, appendExerciseHistory, loadExerciseDelta, saveExerciseHistory } from '../storage/exercises';
@@ -9,6 +9,7 @@ import { hashSet, pageProps, set } from '../utils/types';
 import { hashSetToggle } from '../utils/utils';
 import { getStyle } from '../utils/styles';
 import Button from '../components/button';
+import List from '../components/list';
 
 const Track: React.FC<pageProps> = (props: pageProps) => {
     const [data, setData] = useState<(number|string)[][]>([]);
@@ -74,7 +75,7 @@ const Track: React.FC<pageProps> = (props: pageProps) => {
                     }
                 />
             }
-            <FlatList
+            <List
                 data={data}
                 ListHeaderComponent={
                     <Row data={['Date', 'Reps', 'Weight']}/>

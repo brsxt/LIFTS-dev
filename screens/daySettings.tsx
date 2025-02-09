@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { View, TextInput, FlatList } from 'react-native';
+import { View, TextInput } from 'react-native';
 
 import { loadDayName, saveDayName, loadDayExercises } from '../storage/days';
 import { hashSet, screenProps } from '../utils/types';
@@ -8,6 +8,7 @@ import ListItem from '../components/listItem';
 import { getStyle, DEFAULT_PADDING } from '../utils/styles';
 import { loadExerciseList, loadExerciseName } from '../storage/exercises';
 import Button from '../components/button';
+import List from '../components/list';
 
 const move = (index: number, start: number[], setStart: (x: number[]) => void, dest: number[], setDest: (x: number[]) => void) => {
     start = [...start]
@@ -72,7 +73,7 @@ const DaySettings: React.FC<screenProps> = (props: screenProps) => {
         <View style={{flex: 1}}>
             <TextInput style={[getStyle(), {fontSize: 15, padding: DEFAULT_PADDING}]} value={name} onChangeText={setName}/>
             <View style={[getStyle(), {flex: 1}, {flexDirection: 'row'}]}>
-                <FlatList
+                <List
                     style={[getStyle(), {flex: 1},]}
                     data={included}
                     ListHeaderComponent={<ListItem text={'included'}/>}
@@ -88,7 +89,7 @@ const DaySettings: React.FC<screenProps> = (props: screenProps) => {
                     }}
                     keyExtractor={(item) => String(item)}
                 />
-                <FlatList
+                <List
                     style={[getStyle(), {flex: 1},]}
                     data={excluded}
                     ListHeaderComponent={<ListItem text={'excluded'}/>}

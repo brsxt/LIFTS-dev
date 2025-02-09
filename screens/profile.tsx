@@ -52,6 +52,13 @@ const Profile: React.FC<screenProps> = (props: screenProps) => {
                     props.newPage('JSON');
                 }}
             />
+            <Button
+                title="Edit weight stacks"
+                onPress={async () => {
+                    props.newProps({});
+                    props.newPage('Stacks');
+                }}
+            />
         </View>
     );
 }

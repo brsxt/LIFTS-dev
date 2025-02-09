@@ -1,4 +1,3 @@
-import { FlatList } from 'react-native';
 import { useEffect, useState } from 'react';
 
 import { loadDayList, saveNewDay, loadDayName, loadDayExerciseList } from '../storage/days';
@@ -8,6 +7,7 @@ import { getStyle, APP_NAME } from '../utils/styles';
 import ListItem from '../components/listItem';
 import { screenProps } from '../utils/types';
 import Button from '../components/button';
+import List from '../components/list';
 
 const DayList: React.FC<screenProps> = (props: screenProps) => {
     const [dayList, setDayList] = useState<number[]>([]);
@@ -26,7 +26,7 @@ const DayList: React.FC<screenProps> = (props: screenProps) => {
         props.setTitle(APP_NAME);
     }, []);
     return (
-        <FlatList
+        <List
             style={[getStyle(), {flex: 1},]}
             data={dayList}
             ListHeaderComponent={

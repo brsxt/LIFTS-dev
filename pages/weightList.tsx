@@ -1,10 +1,11 @@
-import { FlatList, Pressable } from 'react-native';
+import { Pressable } from 'react-native';
 import { useEffect, useState } from 'react';
 
 import { loadExerciseHistory, loadExerciseDelta } from '../storage/exercises';
 import { calcWeight, roundWeightDown, MAX_REPS, lowerWeight, calcReps, displayWeight } from '../utils/utils';
 import Row from '../components/row';
 import { pageProps, weightListRow } from '../utils/types';
+import List from '../components/list';
 
 let each_limit = 9;
 let total_limit = 15;
@@ -88,7 +89,7 @@ const WeightList: React.FC<pageProps> = (props: pageProps) => {
         })();
     }, []);
     return (
-        <FlatList
+        <List
             data={data}
             ListHeaderComponent={
                 <Row data={['Weight', 'Est. reps', 'Do reps']}/>

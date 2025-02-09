@@ -13,7 +13,7 @@ const Item: React.FC<itemProps> = (props: itemProps) => {
     }, []);
     let style = props.style || getStyle();
     return (
-        <Text style={[style, {flex: 1}, styles.listItemText]}>{text}</Text>
+        <Text style={[style, {flex: 1}, styles.listItemText, {paddingLeft: 5}]}>{text}</Text>
     )
 }
 

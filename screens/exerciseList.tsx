@@ -1,4 +1,3 @@
-import { FlatList } from 'react-native';
 import { useEffect, useState } from 'react';
 
 import { loadDayName } from '../storage/days';
@@ -7,6 +6,7 @@ import { getStyle } from '../utils/styles';
 import ListItem from '../components/listItem';
 import { screenProps } from '../utils/types';
 import Button from '../components/button';
+import List from '../components/list';
 
 const ExerciseList: React.FC<screenProps> = (props: screenProps) => {
     const [exerciseList, setExerciseList] = useState<number[]>([]);
@@ -34,7 +34,7 @@ const ExerciseList: React.FC<screenProps> = (props: screenProps) => {
         props.getProps().loadExercises!().then((result) => setExerciseList(result));
     }, []);
     return (
-        <FlatList
+        <List
             style={[getStyle(), {flex: 1},]}
             data={exerciseList}
             renderItem={({item}) => {
