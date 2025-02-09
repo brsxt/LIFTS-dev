@@ -86,6 +86,7 @@ const DaySettings: React.FC<screenProps> = (props: screenProps) => {
                             />
                         )
                     }}
+                    keyExtractor={(item) => String(item)}
                 />
                 <FlatList
                     style={[getStyle(), {flex: 1},]}
@@ -101,6 +102,7 @@ const DaySettings: React.FC<screenProps> = (props: screenProps) => {
                             />
                         )
                     }}
+                    keyExtractor={(item) => String(item)}
                 />
             </View>
             <Button

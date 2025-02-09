@@ -9,7 +9,7 @@ const Item: React.FC<itemProps> = (props: itemProps) => {
     const [text, setText] = useState(props.text);
     useEffect(() => {
         if (props.getText)
-            props.getText().then((result) => setText(result));
+            props.getText().then((result) => { setText(result) });
     }, []);
     let style: globalStyle = props.style || getStyle();
     return (
