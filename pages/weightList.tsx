@@ -91,7 +91,7 @@ const WeightList: React.FC<pageProps> = (props: pageProps) => {
         <FlatList
             data={data}
             ListHeaderComponent={
-                <Row data={['Weight', 'Reps', 'Do reps']}/>
+                <Row data={['Weight', 'Est. reps', 'Do reps']}/>
             }
             renderItem={({index, item}: {index: number, item: weightListRow}) => {
                 let rowData: (string|number)[] = [item.weight, item.reps, item.rec];

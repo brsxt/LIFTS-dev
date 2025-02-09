@@ -11,7 +11,7 @@ const Item: React.FC<itemProps> = (props: itemProps) => {
         if (props.getText)
             props.getText().then((result) => { setText(result) });
     }, []);
-    let style: globalStyle = props.style || getStyle();
+    let style = props.style || getStyle();
     return (
         <Text style={[style, {flex: 1}, styles.listItemText]}>{text}</Text>
     )

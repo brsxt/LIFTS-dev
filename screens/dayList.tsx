@@ -63,7 +63,7 @@ const DayList: React.FC<screenProps> = (props: screenProps) => {
             }}
             ListFooterComponent={
                 <ListItem
-                    text={"Add new workout"}
+                    text={"New workout"}
                     onPress={
                         async (): Promise<void> => {
                             let newDay = await saveNewDay();
@@ -74,6 +74,7 @@ const DayList: React.FC<screenProps> = (props: screenProps) => {
                             props.newPage('DaySettings');
                         }
                     }
+                    style={{color: getStyle().accent}}
                 />
             }
         />

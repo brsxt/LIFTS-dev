@@ -51,7 +51,7 @@ const ExerciseList: React.FC<screenProps> = (props: screenProps) => {
                 )
             }}
             ListFooterComponent={
-                <ListItem text={"Add new exercise"}
+                <ListItem text={"New exercise"}
                     onPress={async (): Promise<void> => {
                         let newExercise = await props.getProps().saveNewExercise!();
                         props.disableBack!(true);
@@ -60,6 +60,7 @@ const ExerciseList: React.FC<screenProps> = (props: screenProps) => {
                         });
                         props.newPage('ExerciseSettings');
                     }}
+                    style={{color: getStyle().accent}}
                 />
             }
         />

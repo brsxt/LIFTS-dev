@@ -52,7 +52,7 @@ type inputNumProps = {
 type itemProps = {
     text?: string;
     getText?: () => Promise<string>;
-    style?: globalStyle;
+    style?: {};
 }
 
 type listItemProps = {
@@ -60,6 +60,7 @@ type listItemProps = {
     getText?: () => Promise<string>;
     onPress?: () => void;
     selected?: boolean;
+    style?: {};
 }
 
 type rowProps = {

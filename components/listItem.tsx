@@ -22,7 +22,7 @@ const ListItem: React.FC<listItemProps> = (props: listItemProps) => {
             <Item
                 text={props.text}
                 getText={props.getText}
-                style={style}
+                style={[style, props.style]}
             />
         </Pressable>
     )

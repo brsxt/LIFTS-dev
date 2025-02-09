@@ -34,7 +34,7 @@ const RepList: React.FC<pageProps> = (props: pageProps) => {
         <FlatList
             data={data}
             ListHeaderComponent={
-                <Row data={['Reps', 'Weight', 'Best', 'Do weight']}/>
+                <Row data={['Reps', 'Weight', 'Est. weight', 'Do weight']}/>
             }
             renderItem={({index, item}) => {
                 return (
