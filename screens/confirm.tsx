@@ -5,7 +5,7 @@ import { screenProps } from '../utils/types';
 import Button from '../components/button';
 import { getStyle } from '../utils/styles';
 
-const Delete: React.FC<screenProps> = (props: screenProps) => {
+const Confirm: React.FC<screenProps> = (props: screenProps) => {
     const [name, setName] = useState('');
     useEffect(() => {
         props.setHeaderRight(undefined);
@@ -13,11 +13,11 @@ const Delete: React.FC<screenProps> = (props: screenProps) => {
     }, []);
     return (
         <View style={{flex: 1}}>
-            <Text style={getStyle()}>{`Are you sure you want to delete ${name}?`}</Text>
+            <Text style={getStyle()}>{`Are you sure you want to ${props.getProps().action} ${name}?`}</Text>
             <Button
                 title="Confirm"
                 onPress={async () => {
-                    await props.getProps().delete!();
+                    await props.getProps().execute!();
                     props.goBack(props.getProps().backDistance!);
                 }}
             />
@@ -25,4 +25,4 @@ const Delete: React.FC<screenProps> = (props: screenProps) => {
     );
 }
 
-export default Delete;
+export default Confirm;

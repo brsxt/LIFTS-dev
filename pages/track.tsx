@@ -101,7 +101,7 @@ const Track: React.FC<pageProps> = (props: pageProps) => {
                     title="Delete"
                     onPress={() => {
                         props.screenProps!.newProps({
-                            delete: async () => {
+                            execute: async () => {
                                 let temp: set[] = [];
                                 history.forEach((item, index) => {
                                     if (!(history.length - index - 1 in selected))
@@ -111,8 +111,9 @@ const Track: React.FC<pageProps> = (props: pageProps) => {
                             },
                             getName: async () => 'these sets',
                             backDistance: 1,
+                            action: 'delete',
                         });
-                        props.screenProps!.newPage('Delete');
+                        props.screenProps!.newPage('Confirm');
                     }}
                 />
             }

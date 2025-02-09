@@ -45,6 +45,13 @@ const Profile: React.FC<screenProps> = (props: screenProps) => {
                     saveTheme(STYLES[index]);
                 }}
             />
+            <Button
+                title="Edit JSON data"
+                onPress={async () => {
+                    props.newProps({});
+                    props.newPage('JSON');
+                }}
+            />
         </View>
     );
 }

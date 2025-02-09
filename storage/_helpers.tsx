@@ -52,4 +52,40 @@ async function addToList(val: any, loadList: () => Promise<any[]>, saveList: (x:
     await saveList(list);
 }
 
-export { load, save, del, addToHashSet, removeFromHashSet, addToList };
+async function exportData(): Promise<string> {
+    try {
+        const keys = await AsyncStorage.getAllKeys();
+        const result = await AsyncStorage.multiGet(keys);
+        
+        let data: Record<string,any> = {};
+        result.forEach(req => {
+            if (req[1] !== null && req[1] !== undefined) {
+                data[req[0]] = JSON.parse(req[1])
+            } else {
+                console.error(req);
+            }
+        });
+        return JSON.stringify(data, null, 2);
+    } catch (error) {
+        console.error(error);
+    }
+    return '';
+}
+
+async function importData(s: string): Promise<boolean> {
+    try {
+        let data = JSON.parse(s);
+        (await AsyncStorage.getAllKeys()).forEach(async function (key) {
+            (key in data) || await del(key);
+        });
+        for (const [key, val] of Object.entries(data)) {
+            await save(key, val);
+        }
+    } catch (error) {
+        console.error(error);
+        return false;
+    }
+    return true;
+}
+
+export { load, save, del, addToHashSet, removeFromHashSet, addToList, exportData, importData };

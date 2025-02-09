@@ -41,11 +41,12 @@ const DaySettings: React.FC<screenProps> = (props: screenProps) => {
                 title={'Delete'}
                 onPress={() => {
                     props.newProps({
-                        delete: async () => { await deleteDay(props.getProps().day!) },
+                        execute: async () => { await deleteDay(props.getProps().day!) },
                         getName: async () => await loadDayName(props.getProps().day!),
                         backDistance: 3,
+                        action: 'delete',
                     });
-                    props.newPage('Delete');
+                    props.newPage('Confirm');
                 }}
             />
         )

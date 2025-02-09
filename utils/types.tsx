@@ -20,9 +20,11 @@ type navigatorProps = {
     exercise?: number;
     loadExercises?: () => Promise<number[]>;
     saveNewExercise?: () => Promise<number>;
-    delete?: () => Promise<void>;
+    execute?: () => Promise<void>;
     getName?: () => Promise<string>;
     backDistance?: number;
+    action?: string;
+    data?: any;
 }
 
 type pageProps = {

@@ -22,11 +22,12 @@ const ExerciseSettings: React.FC<screenProps> = (props: screenProps) => {
                 title={'Delete'}
                 onPress={() => {
                     props.newProps({
-                        delete: async () => { await deleteExercise(props.getProps().exercise!) },
+                        execute: async () => { await deleteExercise(props.getProps().exercise!) },
                         getName: async () => await loadExerciseName(props.getProps().exercise!),
                         backDistance: 3,
+                        action: 'delete',
                     });
-                    props.newPage('Delete');
+                    props.newPage('Confirm');
                 }}
             />
         )

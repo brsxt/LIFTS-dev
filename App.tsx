@@ -8,11 +8,15 @@ import Item from './components/item';
 import ExerciseSettings from './screens/exerciseSettings';
 import DaySettings from './screens/daySettings';
 import { navigatorProps } from './utils/types';
-import Delete from './screens/delete';
+import Confirm from './screens/confirm';
 import Profile from './screens/profile';
 import { ContextProvider } from './context';
 import { getStyle } from './utils/styles';
 import Button from './components/button';
+import { exportData } from './storage/_helpers';
+import JSON from './screens/json';
+
+exportData()
 
 export default function App() {
     //page and props are arrays to implement back functionality
@@ -48,8 +52,9 @@ export default function App() {
                     {getPage() == 'Exercise' && <Exercise newPage={newPage} newProps={newProps} getProps={getProps} setTitle={setTitle} setHeaderRight={setHeaderRight} goBack={goBack}/>}
                     {getPage() == 'ExerciseSettings' && <ExerciseSettings newPage={newPage} newProps={newProps} getProps={getProps} setTitle={setTitle} setHeaderRight={setHeaderRight} goBack={goBack}/>}
                     {getPage() == 'DaySettings' && <DaySettings newPage={newPage} newProps={newProps} getProps={getProps} setTitle={setTitle} setHeaderRight={setHeaderRight} goBack={goBack}/>}
-                    {getPage() == 'Delete' && <Delete newPage={newPage} newProps={newProps} getProps={getProps} setTitle={setTitle} setHeaderRight={setHeaderRight} goBack={goBack}/>}
+                    {getPage() == 'Confirm' && <Confirm newPage={newPage} newProps={newProps} getProps={getProps} setTitle={setTitle} setHeaderRight={setHeaderRight} goBack={goBack}/>}
                     {getPage() == 'Profile' && <Profile newPage={newPage} newProps={newProps} getProps={getProps} setTitle={setTitle} setHeaderRight={setHeaderRight} goBack={goBack}/>}
+                    {getPage() == 'JSON' && <JSON newPage={newPage} newProps={newProps} getProps={getProps} setTitle={setTitle} setHeaderRight={setHeaderRight} goBack={goBack}/>}
                 </View>
             </SafeAreaView>
         </ContextProvider>
