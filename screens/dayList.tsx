@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { loadDayList, saveNewDay, loadDayName, loadDayExerciseList } from '../storage/days';
 import { loadExerciseList, saveNewExercise } from '../storage/exercises';
 import { addDayExercise } from '../storage/both';
-import { getStyle } from '../utils/styles';
+import { getStyle, APP_NAME } from '../utils/styles';
 import ListItem from '../components/listItem';
 import { screenProps } from '../utils/types';
 import Button from '../components/button';
@@ -12,6 +12,7 @@ import Button from '../components/button';
 const DayList: React.FC<screenProps> = (props: screenProps) => {
     const [dayList, setDayList] = useState<number[]>([]);
     useEffect((): void => {
+        props.disableBack!(false);
         props.setHeaderRight(
             <Button
                 title={'Profile'}
@@ -22,7 +23,7 @@ const DayList: React.FC<screenProps> = (props: screenProps) => {
             />
         )
         loadDayList().then((result: number[]): void => { setDayList(result) });
-        props.setTitle('LIFTS');
+        props.setTitle(APP_NAME);
     }, []);
     return (
         <FlatList
@@ -64,11 +65,14 @@ const DayList: React.FC<screenProps> = (props: screenProps) => {
                 <ListItem
                     text={"Add new workout"}
                     onPress={
-                        async (): Promise<void> => await saveNewDay().then((): void => {
-                            loadDayList().then((result: number[]): void => {
-                                setDayList(result) 
-                            })
-                        })
+                        async (): Promise<void> => {
+                            let newDay = await saveNewDay();
+                            props.disableBack!(true);
+                            props.newProps({
+                                day: newDay,
+                            });
+                            props.newPage('DaySettings');
+                        }
                     }
                 />
             }

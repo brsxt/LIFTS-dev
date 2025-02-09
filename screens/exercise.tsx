@@ -8,7 +8,7 @@ import WeightList from '../pages/weightList';
 import RepList from '../pages/repList';
 import { loadExerciseHistory, loadExerciseName, loadExerciseType } from '../storage/exercises';
 import { loadBodyWeight } from '../storage/profile';
-import { screenProps, set } from '../utils/types';
+import { screenProps, set, globalStyle } from '../utils/types';
 import { getStyle } from '../utils/styles';
 import Button from '../components/button';
 
@@ -59,11 +59,13 @@ const Exercise: React.FC<screenProps> = (props: screenProps) => {
         <WeightList key='W' exercise={props.getProps().exercise!}/>
     ];
     const names = ['Track', 'Best', 'Next'];
+    let backGroundStyle: globalStyle = getStyle();
+    backGroundStyle.backgroundColor = backGroundStyle.backgroundDark;
     return (
         <View
             style={[getStyle(), {flex: 1},]}
         >
-            <View style={[getStyle(), {flexDirection: 'row'}]}>
+            <View style={[backGroundStyle, {flexDirection: 'row'}]}>
                 {tabs.map((_, index) =>
                     <ListItem
                         text={names[index]}

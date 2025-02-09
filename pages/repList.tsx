@@ -16,7 +16,7 @@ const RepList: React.FC<pageProps> = (props: pageProps) => {
             for (let {reps, weight} of history)
                 if (reps >= 1)
                     maxes[reps] = Math.max(maxes[reps] || 0, weight);
-            let oneRM = Math.max(...Object.entries(maxes).map(([r, w]): number => calcWeight(w, Number(r), 1)));
+            let oneRM = Math.max(0, ...Object.entries(maxes).map(([r, w]): number => calcWeight(w, Number(r), 1)));
             let data: string[][] = []
             let weight = 0;
             let est: number, rec: number;

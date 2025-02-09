@@ -6,8 +6,14 @@ import { globalStyle, listItemProps } from '../utils/types';
 
 const ListItem: React.FC<listItemProps> = (props: listItemProps) => {
     let style: globalStyle = getStyle();
-    if (props.selected !== undefined && !props.selected)
-        style.backgroundColor = style.backgroundDark;
+    if (props.selected !== undefined) {
+        if (props.selected) {
+            style.borderTopLeftRadius = 5;
+            style.borderTopRightRadius = 5;
+        } else {
+            style.backgroundColor = style.backgroundDark;
+        }
+    }
     return (
         <Pressable
             style={[{flex: 1}, style]}

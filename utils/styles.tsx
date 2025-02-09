@@ -4,13 +4,17 @@ import { StyleSheet } from 'react-native';
 import { globalStyle } from './types';
 import { globalContext } from '../app/context';
 
+const DEFAULT_PADDING = 5;
+
+const APP_NAME = 'OVERLOAD';
+
 const styles = StyleSheet.create({
     listItemText: {
-        padding: 5,
+        padding: DEFAULT_PADDING,
         fontSize: 15,
     },
     buttonStyle: {
-        padding: 5,
+        padding: DEFAULT_PADDING,
         justifyContent: 'center',
     }
 });
@@ -61,4 +65,4 @@ function getStyle(): globalStyle {
 
 export default styles;
 
-export { getStyle, STYLES };
+export { getStyle, STYLES, DEFAULT_PADDING, APP_NAME };

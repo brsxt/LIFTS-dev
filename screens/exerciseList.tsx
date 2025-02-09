@@ -11,6 +11,7 @@ import Button from '../components/button';
 const ExerciseList: React.FC<screenProps> = (props: screenProps) => {
     const [exerciseList, setExerciseList] = useState<number[]>([]);
     useEffect(() => {
+        props.disableBack!(false);
         (async () => {
             if (props.getProps().day) {
                 props.setHeaderRight(
@@ -50,13 +51,16 @@ const ExerciseList: React.FC<screenProps> = (props: screenProps) => {
                 )
             }}
             ListFooterComponent={
-                <ListItem text={"Add new exercise"} onPress={
-                    async (): Promise<void> => {
-                        props.getProps().saveNewExercise!().then(async (): Promise<void> => {
-                            props.getProps().loadExercises!().then((result) => setExerciseList(result))
+                <ListItem text={"Add new exercise"}
+                    onPress={async (): Promise<void> => {
+                        let newExercise = await props.getProps().saveNewExercise!();
+                        props.disableBack!(true);
+                        props.newProps({
+                            exercise: newExercise,
                         });
-                    }
-                }/>
+                        props.newPage('ExerciseSettings');
+                    }}
+                />
             }
         />
     );

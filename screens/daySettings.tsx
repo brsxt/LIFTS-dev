@@ -5,7 +5,7 @@ import { loadDayName, saveDayName, loadDayExercises } from '../storage/days';
 import { hashSet, screenProps } from '../utils/types';
 import { deleteDay, addDayExercise, deleteDayExercise } from '../storage/both';
 import ListItem from '../components/listItem';
-import { getStyle } from '../utils/styles';
+import { getStyle, DEFAULT_PADDING } from '../utils/styles';
 import { loadExerciseList, loadExerciseName } from '../storage/exercises';
 import Button from '../components/button';
 
@@ -43,7 +43,7 @@ const DaySettings: React.FC<screenProps> = (props: screenProps) => {
                     props.newProps({
                         execute: async () => { await deleteDay(props.getProps().day!) },
                         getName: async () => await loadDayName(props.getProps().day!),
-                        backDistance: 3,
+                        backDistance: props.backDisabled && 2 || 3,
                         action: 'delete',
                     });
                     props.newPage('Confirm');
@@ -70,7 +70,7 @@ const DaySettings: React.FC<screenProps> = (props: screenProps) => {
     }, []);
     return (
         <View style={{flex: 1}}>
-            <TextInput style={[getStyle(), {fontSize: 15, padding: 5}]} value={name} onChangeText={setName}/>
+            <TextInput style={[getStyle(), {fontSize: 15, padding: DEFAULT_PADDING}]} value={name} onChangeText={setName}/>
             <View style={[getStyle(), {flex: 1}, {flexDirection: 'row'}]}>
                 <FlatList
                     style={[getStyle(), {flex: 1},]}

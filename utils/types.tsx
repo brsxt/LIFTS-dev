@@ -13,6 +13,8 @@ type screenProps = {
     setTitle: (s: string) => void;
     setHeaderRight: (x: React.JSX.Element|undefined) => void;
     goBack: (x?: number) => void;
+    disableBack?: (x: boolean) => void;
+    backDisabled?: boolean;
 };
 
 type navigatorProps = {
@@ -82,6 +84,8 @@ type globalStyle = {
     backgroundDark: string;
     color: string;
     accent: string;
+    borderTopLeftRadius?: number;
+    borderTopRightRadius?: number;
 }
 
 type contextDetails = {
@@ -99,4 +103,12 @@ type buttonProps = {
     bold?: boolean;
 }
 
-export { hashSet, set, screenProps, navigatorProps, pageProps, inputNumProps, itemProps, listItemProps, rowProps, selectorProps, weightListRow, globalStyle, contextDetails, contextAccess, buttonProps };
+type navigationBarProps = {
+    title: string;
+    page: string[];
+    headerRight: React.JSX.Element | undefined;
+    goBack: (x?: number) => void;
+    backDisabled: boolean;
+}
+
+export { hashSet, set, screenProps, navigatorProps, pageProps, inputNumProps, itemProps, listItemProps, rowProps, selectorProps, weightListRow, globalStyle, contextDetails, contextAccess, buttonProps, navigationBarProps };

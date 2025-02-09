@@ -25,8 +25,11 @@ const dayName = (key: number): string => `day_${key}_name`;
 const loadDayName = async (key: number): Promise<string> => await load(dayName(key), 'New day');
 const saveDayName = async (key: number, val: string): Promise<void> => await save(dayName(key), val);
 
-const saveNewDay = async (): Promise<void> =>
-    await addToHashSet(await loadNextDayIndex(), loadDays, saveDays);
+const saveNewDay = async (): Promise<number> => {
+    let index = await loadNextDayIndex();
+    await addToHashSet(index, loadDays, saveDays);
+    return index;
+}
 
 const dayExercises = (key: number): string => `day_${key}_exercises`;
 const loadDayExercises = async (key: number): Promise<hashSet> => await load(dayExercises(key), {});

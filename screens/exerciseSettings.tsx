@@ -8,7 +8,7 @@ import Selector from '../components/selector';
 import InputNum from '../components/inputNum';
 import { screenProps } from '../utils/types';
 import Button from '../components/button';
-import { getStyle } from '../utils/styles';
+import { getStyle, DEFAULT_PADDING } from '../utils/styles';
 
 const ExerciseSettings: React.FC<screenProps> = (props: screenProps) => {
     const [name, setName] = useState<string>('');
@@ -24,7 +24,7 @@ const ExerciseSettings: React.FC<screenProps> = (props: screenProps) => {
                     props.newProps({
                         execute: async () => { await deleteExercise(props.getProps().exercise!) },
                         getName: async () => await loadExerciseName(props.getProps().exercise!),
-                        backDistance: 3,
+                        backDistance: props.backDisabled && 2 || 3,
                         action: 'delete',
                     });
                     props.newPage('Confirm');
@@ -41,7 +41,7 @@ const ExerciseSettings: React.FC<screenProps> = (props: screenProps) => {
     }, []);
     return (
         <View style={[getStyle(), {flex: 1}]}>
-            <TextInput style={[getStyle(), {fontSize: 15, padding: 5}]} value={name} onChangeText={setName}/>
+            <TextInput style={[getStyle(), {fontSize: 15, padding: DEFAULT_PADDING}]} value={name} onChangeText={setName}/>
             <InputNum
                 value={minRepRec}
                 changeValue={setMinRepRec}

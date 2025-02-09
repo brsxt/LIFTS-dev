@@ -1,7 +1,7 @@
 import { hashSet } from '../utils/types';
 import { del, removeFromHashSet, addToHashSet } from './_helpers';
 import { loadDayExercises, saveDayExercises, loadDays, saveDays, dayName, dayExercises } from './days';
-import { loadExerciseDays, saveExerciseDays, loadExercises, saveExercises, exerciseName, exerciseHistory, exerciseDays, exerciseDelta, exerciseMinRepRec, exerciseMaxRepRec } from './exercises';
+import { loadExerciseDays, saveExerciseDays, loadExercises, saveExercises, exerciseName, exerciseHistory, exerciseDays, exerciseDelta, exerciseMinRepRec, exerciseMaxRepRec, exerciseType } from './exercises';
 
 const deleteExercise = async (key: number): Promise<void> => {
     await del(exerciseName(key));
@@ -20,6 +20,7 @@ const deleteExercise = async (key: number): Promise<void> => {
     await del(exerciseDelta(key));
     await del(exerciseMinRepRec(key));
     await del(exerciseMaxRepRec(key));
+    await del(exerciseType(key));
 }
 
 const deleteDay = async (key: number): Promise<void> => {

@@ -10,15 +10,18 @@ import { navigatorProps } from '../utils/types';
 import Confirm from '../screens/confirm';
 import Profile from '../screens/profile';
 import ContextProvider from './context';
-import { getStyle } from '../utils/styles';
+import { getStyle, DEFAULT_PADDING, APP_NAME } from '../utils/styles';
 import Button from '../components/button';
 import JSON from '../screens/json';
+import { globalStyle } from '../utils/types';
+import NavigationBar from '../components/navigationBar';
 
 const Navigator: React.FC = () => {
-    const [title, setTitle] = useState('LIFTS');
+    const [title, setTitle] = useState(APP_NAME);
     const [page, setPage] = useState(['DayList']);
     const [props, setProps] = useState([{}]);
     const [headerRight, setHeaderRight] = useState<React.JSX.Element|undefined>(undefined);
+    const [backDisabled, disableBack] = useState<boolean>(false);
     const getPage = (): string => page[page.length-1];
     const newPage = (s: string): void => setPage([...page, s]);
     const getProps = (): navigatorProps => props[props.length-1];
@@ -32,19 +35,15 @@ const Navigator: React.FC = () => {
     return (
         <ContextProvider>
             <SafeAreaView style={{width: '100%', height: '100%', marginTop:StatusBar.currentHeight}}>
-                <View style={[getStyle(), {flexDirection: 'row', alignItems: 'center'}]}>
-                    {page.length > 1 && <Button title='Back' onPress={() => goBack(1)}/>}
-                    <Text style={[getStyle(), {flex: 1, fontSize: 15}]}>{title}</Text>
-                    {headerRight}
-                </View>
+                <NavigationBar title={title} page={page} headerRight={headerRight} goBack={goBack} backDisabled={backDisabled}/>
                 <View
                     style={[getStyle(), {flex: 1}]}
                 >
-                    {getPage() == 'DayList' && <DayList newPage={newPage} newProps={newProps} getProps={getProps} setTitle={setTitle} setHeaderRight={setHeaderRight} goBack={goBack}/>}
-                    {getPage() == 'ExerciseList' && <ExerciseList newPage={newPage} newProps={newProps} getProps={getProps} setTitle={setTitle} setHeaderRight={setHeaderRight} goBack={goBack}/>}
+                    {getPage() == 'DayList' && <DayList newPage={newPage} newProps={newProps} getProps={getProps} setTitle={setTitle} setHeaderRight={setHeaderRight} goBack={goBack} disableBack={disableBack}/>}
+                    {getPage() == 'ExerciseList' && <ExerciseList newPage={newPage} newProps={newProps} getProps={getProps} setTitle={setTitle} setHeaderRight={setHeaderRight} goBack={goBack} disableBack={disableBack}/>}
                     {getPage() == 'Exercise' && <Exercise newPage={newPage} newProps={newProps} getProps={getProps} setTitle={setTitle} setHeaderRight={setHeaderRight} goBack={goBack}/>}
-                    {getPage() == 'ExerciseSettings' && <ExerciseSettings newPage={newPage} newProps={newProps} getProps={getProps} setTitle={setTitle} setHeaderRight={setHeaderRight} goBack={goBack}/>}
-                    {getPage() == 'DaySettings' && <DaySettings newPage={newPage} newProps={newProps} getProps={getProps} setTitle={setTitle} setHeaderRight={setHeaderRight} goBack={goBack}/>}
+                    {getPage() == 'ExerciseSettings' && <ExerciseSettings newPage={newPage} newProps={newProps} getProps={getProps} setTitle={setTitle} setHeaderRight={setHeaderRight} goBack={goBack} backDisabled={backDisabled}/>}
+                    {getPage() == 'DaySettings' && <DaySettings newPage={newPage} newProps={newProps} getProps={getProps} setTitle={setTitle} setHeaderRight={setHeaderRight} goBack={goBack} backDisabled={backDisabled}/>}
                     {getPage() == 'Confirm' && <Confirm newPage={newPage} newProps={newProps} getProps={getProps} setTitle={setTitle} setHeaderRight={setHeaderRight} goBack={goBack}/>}
                     {getPage() == 'Profile' && <Profile newPage={newPage} newProps={newProps} getProps={getProps} setTitle={setTitle} setHeaderRight={setHeaderRight} goBack={goBack}/>}
                     {getPage() == 'JSON' && <JSON newPage={newPage} newProps={newProps} getProps={getProps} setTitle={setTitle} setHeaderRight={setHeaderRight} goBack={goBack}/>}
