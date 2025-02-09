@@ -10,11 +10,11 @@ import { navigatorProps } from '../utils/types';
 import Confirm from '../screens/confirm';
 import Profile from '../screens/profile';
 import ContextProvider from './context';
-import { getStyle, DEFAULT_PADDING, APP_NAME } from '../utils/styles';
-import Button from '../components/button';
+import { getStyle, APP_NAME } from '../utils/styles';
 import JSON from '../screens/json';
-import { globalStyle } from '../utils/types';
 import NavigationBar from '../components/navigationBar';
+import Stacks from '../screens/stackList';
+import Stack from '../screens/stack';
 
 const Navigator: React.FC = () => {
     const [title, setTitle] = useState(APP_NAME);
@@ -47,6 +47,8 @@ const Navigator: React.FC = () => {
                     {getPage() == 'Confirm' && <Confirm newPage={newPage} newProps={newProps} getProps={getProps} setTitle={setTitle} setHeaderRight={setHeaderRight} goBack={goBack}/>}
                     {getPage() == 'Profile' && <Profile newPage={newPage} newProps={newProps} getProps={getProps} setTitle={setTitle} setHeaderRight={setHeaderRight} goBack={goBack}/>}
                     {getPage() == 'JSON' && <JSON newPage={newPage} newProps={newProps} getProps={getProps} setTitle={setTitle} setHeaderRight={setHeaderRight} goBack={goBack}/>}
+                    {getPage() == 'Stacks' && <Stacks newPage={newPage} newProps={newProps} getProps={getProps} setTitle={setTitle} setHeaderRight={setHeaderRight} goBack={goBack} disableBack={disableBack}/>}
+                    {getPage() == 'Stack' && <Stack newPage={newPage} newProps={newProps} getProps={getProps} setTitle={setTitle} setHeaderRight={setHeaderRight} goBack={goBack} backDisabled={backDisabled}/>}
                 </View>
             </SafeAreaView>
         </ContextProvider>

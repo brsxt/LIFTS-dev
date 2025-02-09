@@ -46,17 +46,17 @@ const Profile: React.FC<screenProps> = (props: screenProps) => {
                 }}
             />
             <Button
-                title="Edit JSON data"
-                onPress={async () => {
-                    props.newProps({});
-                    props.newPage('JSON');
-                }}
-            />
-            <Button
                 title="Edit weight stacks"
                 onPress={async () => {
                     props.newProps({});
                     props.newPage('Stacks');
+                }}
+            />
+            <Button
+                title="Edit JSON data"
+                onPress={async () => {
+                    props.newProps({});
+                    props.newPage('JSON');
                 }}
             />
         </View>

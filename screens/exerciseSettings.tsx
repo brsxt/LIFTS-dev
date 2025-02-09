@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { View, TextInput, Alert } from 'react-native';
+import { View, TextInput } from 'react-native';
 
 import { loadExerciseType, loadExerciseName, loadExerciseMinRepRec, loadExerciseMaxRepRec, saveExerciseName, loadExerciseDelta, saveExerciseMinRepRec, saveExerciseMaxRepRec, saveExerciseType, saveExerciseDelta, TYPES } from '../storage/exercises';
 import { deleteExercise } from '../storage/both';

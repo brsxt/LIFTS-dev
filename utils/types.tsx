@@ -27,6 +27,8 @@ type navigatorProps = {
     backDistance?: number;
     action?: string;
     data?: any;
+    saveNewStack?: () => Promise<number>;
+    stack?: number;
 }
 
 type pageProps = {
