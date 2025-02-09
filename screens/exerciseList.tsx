@@ -11,23 +11,26 @@ import Button from '../components/button';
 const ExerciseList: React.FC<screenProps> = (props: screenProps) => {
     const [exerciseList, setExerciseList] = useState<number[]>([]);
     useEffect(() => {
-        if (props.getProps().day) {
-            props.setHeaderRight(
-                <Button
-                    title={'Settings'}
-                    onPress={() => {
-                        props.newProps({
-                            day: props.getProps().day!,
-                        });
-                        props.newPage('DaySettings');
-                    }}
-                />
-            )
-        } else {
-            props.setHeaderRight(undefined);
-        }
+        (async () => {
+            if (props.getProps().day) {
+                props.setHeaderRight(
+                    <Button
+                        title={'Settings'}
+                        onPress={() => {
+                            props.newProps({
+                                day: props.getProps().day!,
+                            });
+                            props.newPage('DaySettings');
+                        }}
+                    />
+                )
+                props.setTitle(await loadDayName(props.getProps().day!));
+            } else {
+                props.setHeaderRight(undefined);
+                props.setTitle('All exercises');
+            }
+        })();
         props.getProps().loadExercises!().then((result) => setExerciseList(result));
-        if (props.getProps().day) loadDayName(props.getProps().day!);
     }, []);
     return (
         <FlatList

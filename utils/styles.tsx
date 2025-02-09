@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { globalStyle } from './types';
-import { globalContext } from '../context';
+import { globalContext } from '../app/context';
 
 const styles = StyleSheet.create({
     listItemText: {

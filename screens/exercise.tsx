@@ -41,8 +41,7 @@ const Exercise: React.FC<screenProps> = (props: screenProps) => {
                 setWeight(String(round(history[history.length-1].weight - extra)));
                 setReps(String(history[history.length-1].reps));
             }
-            let name: string = await loadExerciseName(props.getProps().exercise!);
-            props.setTitle(name);
+            props.setTitle(await loadExerciseName(props.getProps().exercise!));
         })();
     }, [])
     const tabs = [

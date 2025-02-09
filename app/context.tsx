@@ -1,7 +1,7 @@
 import { createContext, useState, ReactNode, useEffect } from 'react';
 
-import { contextDetails, contextAccess } from './utils/types';
-import { loadTheme } from './storage/profile';
+import { contextDetails, contextAccess } from '../utils/types';
+import { loadTheme } from '../storage/profile';
 
 const value: contextDetails = {
     theme: 'dark',
@@ -12,7 +12,7 @@ const globalContext = createContext<contextAccess>({
     setState: (x: contextDetails) => {},
 });
 
-export const ContextProvider = ({ children }: { children: ReactNode; }) => {
+const ContextProvider = ({ children }: { children: ReactNode; }) => {
     const [state, setState] = useState<contextDetails>(value);
     useEffect(() => {
         (async () => {
@@ -27,5 +27,7 @@ export const ContextProvider = ({ children }: { children: ReactNode; }) => {
         </globalContext.Provider>
     );
 };
+
+export default ContextProvider;
 
 export { globalContext };

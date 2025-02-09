@@ -22,6 +22,7 @@ const DayList: React.FC<screenProps> = (props: screenProps) => {
             />
         )
         loadDayList().then((result: number[]): void => { setDayList(result) });
+        props.setTitle('LIFTS');
     }, []);
     return (
         <FlatList
