@@ -40,10 +40,10 @@ const WeightList: React.FC<pageProps> = (props: pageProps) => {
     const [data, setData] = useState<weightListRow[]>([]);
     const [delta, setDelta] = useState<number>(1);
     useEffect(() => {
-        loadExerciseDelta(props.exercise).then((delta: number) => {
+        (async () => {
+            let delta = await loadExerciseDelta(props.exercise)
             setDelta(delta);
-        });
-        loadExerciseHistory(props.exercise).then(async (history): Promise<void> => {
+            let history = await loadExerciseHistory(props.exercise)
             let maxes: Record<number, number> = {};
             for (let {reps, weight} of history)
                 maxes[reps] = Math.max(maxes[reps] || 0, weight);
@@ -85,7 +85,7 @@ const WeightList: React.FC<pageProps> = (props: pageProps) => {
                 stringData[i].weight = await displayWeight(props.exercise, Number(stringData[i].weight));
             }
             setData(stringData);
-        });
+        })();
     }, []);
     return (
         <FlatList
