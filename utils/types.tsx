@@ -91,6 +91,7 @@ type globalStyle = {
     accent: string;
     borderTopLeftRadius?: number;
     borderTopRightRadius?: number;
+    fontSize?: number;
 }
 
 type contextDetails = {

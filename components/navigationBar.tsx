@@ -8,7 +8,7 @@ const NavigationBar: React.FC<navigationBarProps> = (props: navigationBarProps) 
     return (
         <View style={[getStyle(), {flexDirection: 'row', alignItems: 'center', backgroundColor: getStyle().backgroundDark}]}>
             {props.page.length > 1 && !props.backDisabled && <Button title='Back' onPress={() => props.goBack(1)}/>}
-            <Text style={[getStyle(), {flex: 1, fontSize: 15, padding: DEFAULT_PADDING, backgroundColor: getStyle().backgroundDark}]}>{props.title}</Text>
+            <Text style={[getStyle(), {flex: 1, padding: DEFAULT_PADDING, backgroundColor: getStyle().backgroundDark}]}>{props.title}</Text>
             {props.headerRight}
         </View>
     );

@@ -41,7 +41,7 @@ const ExerciseSettings: React.FC<screenProps> = (props: screenProps) => {
     }, []);
     return (
         <View style={[getStyle(), {flex: 1}]}>
-            <TextInput style={[getStyle(), {fontSize: 15, padding: DEFAULT_PADDING}]} value={name} onChangeText={setName}/>
+            <TextInput style={[getStyle(), {padding: DEFAULT_PADDING}]} value={name} onChangeText={setName}/>
             <InputNum
                 value={minRepRec}
                 changeValue={setMinRepRec}

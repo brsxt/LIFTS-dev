@@ -4,6 +4,8 @@ import { StyleSheet } from 'react-native';
 import { globalStyle } from './types';
 import { globalContext } from '../app/context';
 
+const TEXT_SIZE = 22;
+
 const DEFAULT_PADDING = 5;
 
 const APP_NAME = 'OVERLOAD';
@@ -11,7 +13,6 @@ const APP_NAME = 'OVERLOAD';
 const styles = StyleSheet.create({
     listItemText: {
         padding: DEFAULT_PADDING,
-        fontSize: 15,
     },
     buttonStyle: {
         padding: DEFAULT_PADDING,
@@ -39,6 +40,7 @@ function getStyle(): globalStyle {
                 backgroundDark: getColour(),
                 color: 'black',
                 accent: 'black',
+                fontSize: TEXT_SIZE,
             };
             break;
         case 'light':
@@ -47,6 +49,7 @@ function getStyle(): globalStyle {
                 backgroundDark: '#dedede',
                 color: '#262626',
                 accent: '#478af5',
+                fontSize: TEXT_SIZE,
             };
             break;
         case 'dark':
@@ -55,6 +58,7 @@ function getStyle(): globalStyle {
                 backgroundDark: '#282828',
                 color: 'white',
                 accent: '#ffac30',
+                fontSize: TEXT_SIZE,
             };
             break;
         default:
@@ -65,4 +69,4 @@ function getStyle(): globalStyle {
 
 export default styles;
 
-export { getStyle, STYLES, DEFAULT_PADDING, APP_NAME };
+export { getStyle, STYLES, DEFAULT_PADDING, APP_NAME, TEXT_SIZE };
