@@ -57,7 +57,7 @@ const displayWeight = async (exercise: number, weight: number): Promise<string> 
             sign = '-';
         else
             sign = '+';
-        return `${bodyWeight} ${sign} ${round(Math.abs(diff), 10**Math.max(countDecimals(delta), 1))}`;
+        return `${bodyWeight}${sign}${round(Math.abs(diff), 10**Math.max(countDecimals(delta), 1))}`;
     }
     return String(round(weight, 10**Math.max(countDecimals(delta), 1)));
 }

@@ -12,7 +12,7 @@ import Button from '../components/button';
 import List from '../components/list';
 
 const Track: React.FC<pageProps> = (props: pageProps) => {
-    const [data, setData] = useState<(number|string)[][]>([]);
+    const [data, setData] = useState<string[][]>([]);
     const [delta, setDelta] = useState<number>(1);
     const [selected, setSelected] = useState<hashSet>({});
     const [count, setCount] = useState<number>(0);
@@ -24,10 +24,10 @@ const Track: React.FC<pageProps> = (props: pageProps) => {
     const loadData = async () => {
         loadExerciseHistory(props.exercise).then((history) => {
             setHistory(history);
-            let data = [];
+            let data: string[][] = [];
             for (let i in history) {
                 let item = history[i];
-                data.unshift([item.time, item.reps, round(item.weight)]);
+                data.unshift([(new Date(item.time)).toLocaleDateString(), String(item.reps), String(round(item.weight))]);
             }
             setData(data);
         });
@@ -81,8 +81,6 @@ const Track: React.FC<pageProps> = (props: pageProps) => {
                     <Row data={['Date', 'Reps', 'Weight']}/>
                 }
                 renderItem={({index, item}) => {
-                    item = [...item]
-                    item[0] = (new Date(item[0])).toLocaleDateString()
                     return (
                         <Pressable
                             key={index}

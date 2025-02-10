@@ -1,3 +1,5 @@
+import { TextStyle } from 'react-native';
+
 type hashSet = Record<number, number>;
 
 type set = {
@@ -66,7 +68,7 @@ type listItemProps = {
 }
 
 type rowProps = {
-    data: (number|string)[];
+    data: string[];
     selected?: boolean;
 }
 
@@ -114,4 +116,9 @@ type navigationBarProps = {
     backDisabled: boolean;
 }
 
-export { hashSet, set, screenProps, navigatorProps, pageProps, inputNumProps, itemProps, listItemProps, rowProps, selectorProps, weightListRow, globalStyle, contextDetails, contextAccess, buttonProps, navigationBarProps };
+type cellProps = {
+    style: (globalStyle | TextStyle)[];
+    text: string;
+}
+
+export { hashSet, set, screenProps, navigatorProps, pageProps, inputNumProps, itemProps, listItemProps, rowProps, selectorProps, weightListRow, globalStyle, contextDetails, contextAccess, buttonProps, navigationBarProps, cellProps };
