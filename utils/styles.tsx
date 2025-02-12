@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 import { globalStyle } from './types';
 import { globalContext } from '../app/context';
 
-const TEXT_SIZE = 22;
+const TEXT_SIZE = 20;
 
 const DEFAULT_PADDING = 5;
 

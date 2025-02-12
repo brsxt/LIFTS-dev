@@ -39,11 +39,9 @@ function comp(cx: number, cy: number): number {
 
 const WeightList: React.FC<pageProps> = (props: pageProps) => {
     const [data, setData] = useState<weightListRow[]>([]);
-    const [delta, setDelta] = useState<number>(1);
     useEffect(() => {
         (async () => {
             let delta = await loadExerciseDelta(props.exercise)
-            setDelta(delta);
             let history = await loadExerciseHistory(props.exercise)
             let maxes: Record<number, number> = {};
             for (let {reps, weight} of history)

@@ -30,7 +30,7 @@ const Stack: React.FC<screenProps> = (props: screenProps) => {
     }, []);
     return (
         <View style={[getStyle(), {flex: 1}]}>
-            <TextInput style={[getStyle(), {fontSize: 15, padding: DEFAULT_PADDING}]} value={name} onChangeText={setName}/>
+            <TextInput style={[getStyle(), {padding: DEFAULT_PADDING}]} value={name} onChangeText={setName}/>
             <TextInput style={[getStyle(), {fontFamily: 'monospace', flex: 1, textAlignVertical: 'top'}]} value={data} onChangeText={setData} multiline={true}/>
             {message !== '' && <Text style={getStyle()}>{message}</Text>}
             <Button
